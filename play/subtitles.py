@@ -91,7 +91,7 @@ def do_config():
 if __name__ == "__main__":
     do_config()
 
-    subs = Subtitles()
+    subs = Scene()
 
     text = Text("People of Earth!!")
     subs.add(text)
