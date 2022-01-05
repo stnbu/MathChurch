@@ -1,4 +1,5 @@
-import time
+
+from manim import *
 
 class Command:
 
@@ -16,13 +17,39 @@ def get_reading_pause(text):
     num_words = len(text.split(' '))
     return (num_words / wpm) * 60
 
+"""
+
+    text = Text("People of Earth!!")
+    subs.add(text)
+    subs.wait(3)
+    subs.remove(text)
+
+    text = Text("Look at this!!")
+    subs.add(text)
+    subs.wait(3)
+    subs.remove(text)
+
+    text = Text("(gestures rudely)")
+    subs.add(text)
+    subs.wait(3)
+    subs.remove(text)
+
+    subs.render()
+"""
+
+
 def play_lecture(lecture):
+    global subs
     print("---[begin lecture]---\n\n")
     for item in lecture:
         if isinstance(item, str):
             pause = get_reading_pause(item)
-            print(item + "\n\n")
-            time.sleep(pause)
+            
+            text = Text(item)
+            subs.add(text)
+            subs.wait(pause)
+            subs.remove(text)
+
         elif item.__self__.__class__ == Command:  # yuck
             item()
         else:
@@ -58,4 +85,8 @@ with "commands". I can tell Manim to display some impressive math equation.
     """,
 ]
 
+subs = Scene()
+
 play_lecture(lecture)
+
+subs.render()
