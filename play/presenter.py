@@ -24,12 +24,12 @@ def play_lecture(lecture):
         if isinstance(item, str):
             pause = get_reading_pause(item)
             
-            text = Text(item)
-            text.scale(0.5)
-            text.to_edge(DOWN)
-            scene.add(text)
+            subtitle = Text(item)
+            subtitle.scale(0.5)
+            subtitle.to_edge(DOWN)
+            scene.add(subtitle)
             scene.wait(pause)
-            scene.remove(text)
+            scene.remove(subtitle)
 
         elif isinstance(item, list):
             command, mobject = item
