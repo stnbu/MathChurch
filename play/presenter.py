@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+
+"""Demo of a concept:
+
+Let the _subtitles_ drive the video/presentation. Then you can text-to-speech the
+output, *or* you can have someone read the subs and merge that with the video.
+
+A separation of powers: Math people write the presentations, voice people voice
+the presentation (or whoever wants to).
+"""
 
 from manim import *
 
@@ -8,7 +18,7 @@ def get_reading_pause(text):
 
 
 def play_lecture(lecture):
-    global subs
+    global scene
     global impressive_equation
     for item in lecture:
         if isinstance(item, str):
@@ -17,16 +27,16 @@ def play_lecture(lecture):
             text = Text(item)
             text.scale(0.5)
             text.to_edge(DOWN)
-            subs.add(text)
-            subs.wait(pause)
-            subs.remove(text)
+            scene.add(text)
+            scene.wait(pause)
+            scene.remove(text)
 
         elif isinstance(item, list):
             command, mobject = item
             if command == "add":
-                subs.add(mobject)
+                scene.add(mobject)
             elif command == "remove":
-                subs.remove(mobject)
+                scene.remove(mobject)
             else:
                 raise ValueError
         else:
@@ -61,8 +71,6 @@ with "commands". I can tell Manim to display some impressive math equation.
     """,
 ]
 
-subs = Scene()
-
+scene = Scene()
 play_lecture(lecture)
-
-subs.render()
+scene.render()
