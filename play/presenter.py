@@ -17,26 +17,6 @@ def get_reading_pause(text):
     num_words = len(text.split(' '))
     return (num_words / wpm) * 60
 
-"""
-
-    text = Text("People of Earth!!")
-    subs.add(text)
-    subs.wait(3)
-    subs.remove(text)
-
-    text = Text("Look at this!!")
-    subs.add(text)
-    subs.wait(3)
-    subs.remove(text)
-
-    text = Text("(gestures rudely)")
-    subs.add(text)
-    subs.wait(3)
-    subs.remove(text)
-
-    subs.render()
-"""
-
 
 def play_lecture(lecture):
     global subs
@@ -46,6 +26,7 @@ def play_lecture(lecture):
             pause = get_reading_pause(item)
             
             text = Text(item)
+            text.to_edge(DOWN)
             subs.add(text)
             subs.wait(pause)
             subs.remove(text)
