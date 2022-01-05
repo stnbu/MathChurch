@@ -5,10 +5,18 @@ from manim import *
 
 
 class Subtitles(Scene):
+    """"""
+
+    # def construct(self):
+    #     subs = Text("People of Earth!!")
+    #     self.add(subs)
+    #     self.wait(10)
+
+
+class SubFrame(Scene):
     def construct(self):
-        subs = Text("People of Earth!!")
-        self.add(subs)
-        self.wait(10)
+        vg = VGroup()
+        self.add(vg)
 
 
 class ClickArgs:
@@ -82,8 +90,26 @@ def do_config():
 
 if __name__ == "__main__":
     do_config()
-    scene = Subtitles()
-    import ipdb
 
-    ipdb.set_trace()
-    scene.render()
+    subs = Subtitles()
+
+    text = Text("People of Earth!!")
+    subs.add(text)
+    subs.wait(3)
+    subs.remove(text)
+
+    text = Text("Look at this!!")
+    subs.add(text)
+    subs.wait(3)
+    subs.remove(text)
+
+    text = Text("(gestures rudely)")
+    subs.add(text)
+    subs.wait(3)
+    subs.remove(text)
+
+    subs.render()
+
+    # scene = Subtitles()
+
+    # scene.render()
