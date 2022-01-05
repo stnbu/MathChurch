@@ -2,8 +2,9 @@
 
 """Demo of a concept:
 
-Let the _subtitles_ drive the video/presentation. Then you can text-to-speech the
-output, *or* you can have someone read the subs and merge that with the video.
+Let the _subtitles_ drive the video/presentation. Then you can text-to-speech
+the output, *or* you can have someone read the subs and merge that with the
+video.
 
 A separation of powers: Math people write the presentations, voice people voice
 the presentation (or whoever wants to).
