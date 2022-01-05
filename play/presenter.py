@@ -1,17 +1,6 @@
 
 from manim import *
 
-class Command:
-
-    def __init__(self, command):
-        self.command = command
-
-    def execute(self):
-        print("<" + self.command + ">\n\n")
-
-    def disappear(self):
-        print("<Now undoing the command or something.>\n\n")
-
 def get_reading_pause(text):
     wpm = 250
     num_words = len(text.split(' '))
@@ -20,24 +9,30 @@ def get_reading_pause(text):
 
 def play_lecture(lecture):
     global subs
-    print("---[begin lecture]---\n\n")
+    global impressive_equation
     for item in lecture:
         if isinstance(item, str):
             pause = get_reading_pause(item)
             
             text = Text(item)
+            text.scale(0.5)
             text.to_edge(DOWN)
             subs.add(text)
             subs.wait(pause)
             subs.remove(text)
 
-        elif item.__self__.__class__ == Command:  # yuck
-            item()
+        elif isinstance(item, list):
+            command, mobject = item
+            if command == "add":
+                subs.add(mobject)
+            elif command == "remove":
+                subs.remove(mobject)
+            else:
+                raise ValueError
         else:
             raise ValueError
-    print("---[end lecture]---\n\n")
 
-impressive_equation = Command("Showing the impressive equation!")
+impressive_equation = MathTex(r"h(u*v)=h(u) \odot h(v)")
 
 lecture = [
     """This is the first chunk of text. Let me try to explain the idea here.
@@ -54,12 +49,12 @@ with "commands". I can tell Manim to display some impressive math equation.
     """,
     """Here goes...
     """,
-    impressive_equation.execute,
+    ['add', impressive_equation],
     """Can you still see it? Good. That's the idea.
     """,
     """Now watch me make it disappear.
     """,
-    impressive_equation.disappear,
+    ['remove', impressive_equation],
     """All gone? Good. It should be!
     """,
     """Amen!
