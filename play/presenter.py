@@ -11,9 +11,10 @@ the presentation (or whoever wants to).
 
 from manim import *
 
+
 def get_reading_pause(text):
     wpm = 250
-    num_words = len(text.split(' '))
+    num_words = len(text.split(" "))
     return (num_words / wpm) * 60
 
 
@@ -23,7 +24,7 @@ def play_lecture(lecture):
     for item in lecture:
         if isinstance(item, str):
             pause = get_reading_pause(item)
-            
+
             subtitle = Text(item)
             subtitle.scale(0.5)
             subtitle.to_edge(DOWN)
@@ -42,6 +43,7 @@ def play_lecture(lecture):
         else:
             raise ValueError
 
+
 impressive_equation = MathTex(r"h(u*v)=h(u) \odot h(v)")
 
 lecture = [
@@ -59,12 +61,12 @@ with "commands". I can tell Manim to display some impressive math equation.
     """,
     """Here goes...
     """,
-    ['add', impressive_equation],
+    ["add", impressive_equation],
     """Can you still see it? Good. That's the idea.
     """,
     """Now watch me make it disappear.
     """,
-    ['remove', impressive_equation],
+    ["remove", impressive_equation],
     """All gone? Good. It should be!
     """,
     """Amen!
