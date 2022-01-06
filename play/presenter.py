@@ -14,6 +14,7 @@ if __name__ == "__main__":
     import sys, os
     sys.path.append(os.path.dirname(__file__))  # only grownups are allowed to do this.
 
+
 from gtts import *
 from mutagen.mp3 import MP3
 from manim import *
@@ -70,7 +71,7 @@ with "commands". I can tell Manim to display some impressive math equation.
     """Here goes...
     """,
     ["add", impressive_equation],
-    """Can you still see it? Good. That's the idea.
+    """Can you see it? Good. That's the idea.
     """,
     """Now watch me make it disappear.
     """,
@@ -82,6 +83,5 @@ with "commands". I can tell Manim to display some impressive math equation.
 ]
 
 scene = Scene()
-play_lecture(["Hello, world!"])
-scene.wait(5)
+play_lecture(lecture)
 scene.render()

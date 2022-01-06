@@ -9,10 +9,11 @@ Note that we assume "mp3 throughout". It's hard-coded here and there.
 import re, hashlib, os
 from google.cloud import texttospeech
 
+import logging
+
 
 def get_google_speech_from_text(input):
-    logger = print
-    logger(
+    logging.warning(
         "Performing TTS operation using Google Cloud Text-to-speech. This may cost actual money."
     )
     client = texttospeech.TextToSpeechClient()
@@ -50,7 +51,9 @@ def get_audio_bytes(input, bytes_getter):
     hash = get_normalized_input_hash(input)
     path = get_audio_cache_path(hash)
     if os.path.exists(path):
+        logging.info("cache hit for %s" % hash)
         return open(path, "rb").read(), path
+    logging.info("cache miss for %s" % hash)
     audio_bytes = bytes_getter(input)
     with open(path, "wb") as f:
         f.write(audio_bytes)
