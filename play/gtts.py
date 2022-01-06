@@ -11,7 +11,7 @@ def get_normalized_input_hash(input):
     Text to speech is currently done by GCS. Runaway requests are bad.
     """
     result = re.sub(r'[^\w ]|[_\d]', '', input)
-    result = re.sub(r'\s+', ' ', result).strip()
+    result = re.sub(r'\s+', ' ', result).strip().lower()
     # some hash
     return hashlib.sha224(result.encode()).hexdigest()
 
@@ -33,37 +33,20 @@ def get_audio_bytes(input, bytes_getter):
         f.write(audio_bytes)
     return audio_bytes
 
-def _test_bytes_getter(input):
-    return input.encode()
+if __name__ == "__main__":
 
+    assert (
+        get_normalized_input_hash("my frog has fleas.") ==
+        get_normalized_input_hash(" My \t frog $ has _ -  fleas! \t ")
+    )
 
-bts = get_audio_bytes("hi planet", _test_bytes_getter)
+    def _test_bytes_getter(input):
+        return input.encode()
 
-import ipdb; ipdb.set_trace()
+    def _exceptional_bytes_get(input):
+        raise AssertionError
 
-from mutagen.mp3 import MP3
-audio = MP3("output.mp3")
-print(audio.info.length)
+    bytes1 = get_audio_bytes("hi planet", _test_bytes_getter)
+    bytes2 = get_audio_bytes("hi planet!!", _exceptional_bytes_get)
 
-
-from google.cloud import texttospeech
-
-client = texttospeech.TextToSpeechClient()
-
-synthesis_input = texttospeech.SynthesisInput(text="Hello, World!")
-
-voice = texttospeech.VoiceSelectionParams(
-    language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
-)
-
-audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
-
-response = client.synthesize_speech(
-    input=synthesis_input, voice=voice, audio_config=audio_config
-)
-
-
-with open("output.mp3", "wb") as out:
-    out.write(response.audio_content)
-
-
+    assert bytes1 == bytes2
