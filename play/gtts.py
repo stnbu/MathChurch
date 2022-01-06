@@ -3,7 +3,30 @@
 * https://github.com/googleapis/python-texttospeech
 * https://cloud.google.com/text-to-speech/docs/libraries
 """
+
 import re, hashlib, os
+from google.cloud import texttospeech
+
+def get_google_speech_from_text(input):
+    logger = print
+    logger("Performing TTS operation using Google Cloud Text-to-speech. This may cost actual money.")
+    client = texttospeech.TextToSpeechClient()
+    synthesis_input = texttospeech.SynthesisInput(text=input)
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+    )
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3
+    )
+    response = client.synthesize_speech(
+        input=synthesis_input, voice=voice, audio_config=audio_config
+    )
+    return response.audio_content
+
+
+
+
+
 
 def get_normalized_input_hash(input):
     """Crude, heavyhanded normalization of input. Return its hash.
@@ -50,3 +73,9 @@ if __name__ == "__main__":
     bytes2 = get_audio_bytes("hi planet!!", _exceptional_bytes_get)
 
     assert bytes1 == bytes2
+
+    # # This works, but it will consume API resources (your money).
+    # text = "Hello, World!"
+    # the_bytes = get_audio_bytes(text, get_google_speech_from_text)
+    # with open("test.mp3", "wb") as f:  # should be in your cache too.
+    #     f.write(the_bytes)
