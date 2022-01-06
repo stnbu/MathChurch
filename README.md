@@ -1,6 +1,6 @@
 # Math Church
 
-tl;dr -- Drive your presentation entirely with subtitles interleaved with commands. Video: Manim, Audio: GTTS.
+tl;dr -- Drive your presentation entirely with subtitles interleaved with commands. Video: Manim, Audio: Google TTS.
 
 This is a just-for-fun mathutainment project using [Manim](https://www.manim.community/) (of [3b1b](https://www.3blue1brown.com/) fame) as a graphics engine.
 
