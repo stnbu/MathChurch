@@ -30,4 +30,4 @@ Hints:
 
 As of [this version](https://github.com/stnbu/MathChurch/blob/fab59a85a2e142f065b4921f9fc076caa6b67267/play/presenter.py), the output of `python play/presenter.py` looks like this:
 
-[![hopefully-embedded-video](https://youtu.be/_c5xLnW9Eo0)
+[![Subs 2 Video](http://img.youtube.com/vi/_c5xLnW9Eo0/0.jpg)](http://www.youtube.com/watch?v=_c5xLnW9Eo0 "Subs 2 Video")
