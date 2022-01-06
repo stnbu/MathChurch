@@ -2,14 +2,19 @@
 
 * https://github.com/googleapis/python-texttospeech
 * https://cloud.google.com/text-to-speech/docs/libraries
+
+Note that we assume "mp3 throughout". It's hard-coded here and there.
 """
 
 import re, hashlib, os
 from google.cloud import texttospeech
 
+
 def get_google_speech_from_text(input):
     logger = print
-    logger("Performing TTS operation using Google Cloud Text-to-speech. This may cost actual money.")
+    logger(
+        "Performing TTS operation using Google Cloud Text-to-speech. This may cost actual money."
+    )
     client = texttospeech.TextToSpeechClient()
     synthesis_input = texttospeech.SynthesisInput(text=input)
     voice = texttospeech.VoiceSelectionParams(
@@ -24,43 +29,40 @@ def get_google_speech_from_text(input):
     return response.audio_content
 
 
-
-
-
-
 def get_normalized_input_hash(input):
-    """Crude, heavyhanded normalization of input. Return its hash.
+    """Crude, heavy-handed normalization of input. Return its hash.
 
     Text to speech is currently done by GCS. Runaway requests are bad.
     """
-    result = re.sub(r'[^\w ]|[_\d]', '', input)
-    result = re.sub(r'\s+', ' ', result).strip().lower()
+    result = re.sub(r"[^\w ]|[_\d]", "", input)
+    result = re.sub(r"\s+", " ", result).strip().lower()
     # some hash
     return hashlib.sha224(result.encode()).hexdigest()
 
 
 def get_audio_cache_path(hash):
-    path = os.path.join('media', 'audio', hash + ".mp3")  # MP33333
+    path = os.path.join("media", "audio", hash + ".mp3")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     return path
+
 
 def get_audio_bytes(input, bytes_getter):
     hash = get_normalized_input_hash(input)
     path = get_audio_cache_path(hash)
     if os.path.exists(path):
-        with open(path, 'rb') as f:
-            return f.read() # um
+        with open(path, "rb") as f:
+            return f.read()  # um
 
     audio_bytes = bytes_getter(input)
-    with open(path, 'wb') as f:
+    with open(path, "wb") as f:
         f.write(audio_bytes)
     return audio_bytes
 
+
 if __name__ == "__main__":
 
-    assert (
-        get_normalized_input_hash("my frog has fleas.") ==
-        get_normalized_input_hash(" My \t frog $ has _ -  fleas! \t ")
+    assert get_normalized_input_hash("my frog has fleas.") == get_normalized_input_hash(
+        " My \t frog $ has _ -  fleas! \t "
     )
 
     def _test_bytes_getter(input):
