@@ -12,6 +12,7 @@ the presentation (or whoever wants to).
 
 if __name__ == "__main__":
     import sys, os
+
     sys.path.append(os.path.dirname(__file__))  # only grownups are allowed to do this.
 
 
@@ -19,12 +20,15 @@ from gtts import *
 from mutagen.mp3 import MP3
 from manim import *
 
+
 def get_reading_pause(text):
     wpm = 250
     num_words = len(text.split(" "))
     return (num_words / wpm) * 60
 
+
 current_offset = 0
+
 
 def play_lecture(lecture):
     global scene
