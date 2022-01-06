@@ -1,6 +1,5 @@
-
-
 from manim import *
+
 
 class SomeEquasion(Scene):
     def construct(self):
@@ -9,6 +8,7 @@ class SomeEquasion(Scene):
         logo = VGroup(ds_m)
         logo.move_to(ORIGIN)
         self.add(logo)
+
 
 class BraceAnnotation(Scene):
     def construct(self):
