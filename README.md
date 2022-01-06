@@ -28,6 +28,6 @@ Hints:
 * Other than that, manim is probably the most challenging thing. See their [excellent docs](https://docs.manim.community/en/stable).
 * Holler. Submit an issue. Open a PR. and/or [Join the Discord](https://discord.gg/XTHcHc7N).
 
-As of [this version](https://github.com/stnbu/MathChurch/blob/fab59a85a2e142f065b4921f9fc076caa6b67267/play/presenter.py), the output of `python play/presenter.py` looks like this:
+As of commit fab59a85a2e142f065b4921f9fc076caa6b67267, the output of `python play/presenter.py` looks like this:
 
 [![Subs 2 Video](http://img.youtube.com/vi/_c5xLnW9Eo0/0.jpg)](http://www.youtube.com/watch?v=_c5xLnW9Eo0 "Subs 2 Video")
