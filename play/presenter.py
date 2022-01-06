@@ -10,29 +10,36 @@ A separation of powers: Math people write the presentations, voice people voice
 the presentation (or whoever wants to).
 """
 
-from manim import *
+if __name__ == "__main__":
+    import sys, os
+    sys.path.append(os.path.dirname(__file__))  # only grownups are allowed to do this.
 
+from gtts import *
+from mutagen.mp3 import MP3
+from manim import *
 
 def get_reading_pause(text):
     wpm = 250
     num_words = len(text.split(" "))
     return (num_words / wpm) * 60
 
+current_offset = 0
 
 def play_lecture(lecture):
     global scene
     global impressive_equation
+    global current_offset
     for item in lecture:
         if isinstance(item, str):
-            pause = get_reading_pause(item)
-
+            _, path = get_audio_bytes(item, get_google_speech_from_text)
+            length = MP3(path).info.length
+            scene.add_sound(path, time_offset=current_offset)
             subtitle = Text(item)
             subtitle.scale(0.5)
             subtitle.to_edge(DOWN)
             scene.add(subtitle)
-            scene.wait(pause)
+            scene.wait(length)
             scene.remove(subtitle)
-
         elif isinstance(item, list):
             command, mobject = item
             if command == "add":
@@ -75,5 +82,6 @@ with "commands". I can tell Manim to display some impressive math equation.
 ]
 
 scene = Scene()
-play_lecture(lecture)
+play_lecture(["Hello, world!"])
+scene.wait(5)
 scene.render()
