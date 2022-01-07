@@ -56,6 +56,7 @@ def play_lecture(lecture):
         else:
             raise ValueError
 
+
 if __name__ == "__main__":
 
     impressive_equation = MathTex(r"h(u*v)=h(u) \odot h(v)")
