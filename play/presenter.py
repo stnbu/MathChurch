@@ -20,32 +20,35 @@ from gtts import *
 from mutagen.mp3 import MP3
 from manim import *
 
+class Player:
 
-def play_lecture(lecture):
-    global scene
-    global impressive_equation
-    current_offset = 0
-    for item in lecture:
-        if isinstance(item, str):
-            _, path = get_audio_bytes(item, get_google_speech_from_text)
-            length = MP3(path).info.length
-            scene.add_sound(path, time_offset=current_offset)
-            subtitle = Text(item)
-            subtitle.scale(0.5)
-            subtitle.to_edge(DOWN)
-            scene.add(subtitle)
-            scene.wait(length)
-            scene.remove(subtitle)
-        elif isinstance(item, list):
-            command, mobject = item
-            if command == "add":
-                scene.add(mobject)
-            elif command == "remove":
-                scene.remove(mobject)
+    def __init__(self, scene, lecture):
+        self.scene = scene
+        self.lecture = lecture
+
+    def play(self):
+        current_offset = 0
+        for item in self.lecture:
+            if isinstance(item, str):
+                _, path = get_audio_bytes(item, get_google_speech_from_text)
+                length = MP3(path).info.length
+                self.scene.add_sound(path, time_offset=current_offset)
+                subtitle = Text(item)
+                subtitle.scale(0.5)
+                subtitle.to_edge(DOWN)
+                self.scene.add(subtitle)
+                self.scene.wait(length)
+                self.scene.remove(subtitle)
+            elif isinstance(item, list):
+                command, mobject = item
+                if command == "add":
+                    self.scene.add(mobject)
+                elif command == "remove":
+                    self.scene.remove(mobject)
+                else:
+                    raise ValueError
             else:
                 raise ValueError
-        else:
-            raise ValueError
 
 
 if __name__ == "__main__":
@@ -80,5 +83,5 @@ if __name__ == "__main__":
     ]
 
     scene = Scene()
-    play_lecture(lecture)
+    player = Player(scene, lecture)
     scene.render()
