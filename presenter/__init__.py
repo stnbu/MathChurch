@@ -10,6 +10,7 @@ A separation of powers: Math people write the presentations, voice people voice
 the presentation (or whoever wants to).
 """
 
+from types import FunctionType
 from .gtts import *
 from mutagen.mp3 import MP3
 from manim import *
@@ -33,14 +34,8 @@ class Player:
                 self.scene.add(subtitle)
                 self.scene.wait(length)
                 self.scene.remove(subtitle)
-            elif isinstance(item, list):
-                command, mobject = item
-                if command == "add":
-                    self.scene.add(mobject)
-                elif command == "remove":
-                    self.scene.remove(mobject)
-                else:
-                    raise ValueError
+            elif isinstance(item, FunctionType):
+                item(self.scene)
             else:
                 raise ValueError
 
@@ -64,12 +59,12 @@ if __name__ == "__main__":
         """,
         """Here goes...
         """,
-        ["add", impressive_equation],
+        lambda scene: scene.add(impressive_equation),
         """Can you see it? Good. That's the idea.
         """,
         """Now watch me make it disappear.
         """,
-        ["remove", impressive_equation],
+        lambda scene: scene.remove(impressive_equation),
         """All gone? Good. It should be!
         """,
         """Amen!
