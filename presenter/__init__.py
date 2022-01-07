@@ -10,7 +10,7 @@ A separation of powers: Math people write the presentations, voice people voice
 the presentation (or whoever wants to).
 """
 
-from gtts import *
+from .gtts import *
 from mutagen.mp3 import MP3
 from manim import *
 
