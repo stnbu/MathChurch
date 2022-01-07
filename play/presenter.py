@@ -20,8 +20,8 @@ from gtts import *
 from mutagen.mp3 import MP3
 from manim import *
 
-class Player:
 
+class Player:
     def __init__(self, scene, lecture):
         self.scene = scene
         self.lecture = lecture
