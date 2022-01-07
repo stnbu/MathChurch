@@ -10,12 +10,6 @@ A separation of powers: Math people write the presentations, voice people voice
 the presentation (or whoever wants to).
 """
 
-if __name__ == "__main__":
-    import sys, os
-
-    sys.path.append(os.path.dirname(__file__))  # only grownups are allowed to do this.
-
-
 from gtts import *
 from mutagen.mp3 import MP3
 from manim import *
