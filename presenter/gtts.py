@@ -2,14 +2,13 @@
 
 * https://github.com/googleapis/python-texttospeech
 * https://cloud.google.com/text-to-speech/docs/libraries
+* https://www.w3.org/TR/speech-synthesis/ (with SSML reference)
 
 Note that we assume "mp3 throughout". It's hard-coded here and there.
 """
 
-import re, hashlib, os
+import re, hashlib, os, logging
 from google.cloud import texttospeech
-
-import logging
 
 
 def get_google_speech_from_text(input):
