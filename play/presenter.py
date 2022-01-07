@@ -84,4 +84,5 @@ if __name__ == "__main__":
 
     scene = Scene()
     player = Player(scene, lecture)
+    player.play()
     scene.render()
