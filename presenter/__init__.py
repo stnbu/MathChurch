@@ -25,6 +25,9 @@ class Player:
         current_offset = 0
         for item in self.lecture:
             if isinstance(item, str):
+                if (item.strip() == ""):
+                    # because we do not want an empty mp3 file.
+                    continue
                 _, path = get_audio_bytes(item, get_google_speech_from_text)
                 length = MP3(path).info.length
                 self.scene.add_sound(path, time_offset=current_offset)
