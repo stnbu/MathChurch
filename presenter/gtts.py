@@ -11,6 +11,21 @@ import re, hashlib, os, logging
 from google.cloud import texttospeech
 
 
+def get_local_speech_from_text(input):
+    import pyttsx3, random, tempfile, time
+    logging.warning("You are using the 'development' TTS service. It might break your laptop!")
+    path = os.path.join(tempfile.gettempdir(), str(random.randint(1e11, 1e12-1)) + ".wav")
+    print(path)
+    engine = pyttsx3.init()
+    engine.save_to_file(input, path)
+    engine.runAndWait()
+    time.sleep(1)
+    with open(path, "rb") as f:
+        bytes = f.read()
+    #os.remove(path)
+    return bytes
+
+
 def get_google_speech_from_text(input):
     logging.warning(
         "Performing TTS operation using Google Cloud Text-to-speech. This may cost actual money."
@@ -40,8 +55,8 @@ def get_normalized_input_hash(input):
     return hashlib.sha224(result.encode()).hexdigest()
 
 
-def get_audio_cache_path(hash):
-    path = os.path.join("media", "audio", hash + ".mp3")
+def get_audio_cache_path(hash, driver, format):
+    path = os.path.join("media", "audio", driver, hash + "." + format)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     return path
 
@@ -60,6 +75,22 @@ def get_audio_bytes(input, bytes_getter):
 
 
 if __name__ == "__main__":
+
+    import pyttsx3
+
+    corpus = "what if I made this a totally unusual but very long sentence of great hatred, but then just totally changed subjects I cannot wonder what if there was never an end. You know, what if I made a new sentence."
+
+
+    engine = pyttsx3.init()#("espeak", debug=True)
+    engine.save_to_file(corpus, '/tmp/xblarggg3.wav')
+    engine.runAndWait()
+    import sys; sys.exit(0)
+
+    #import ipdb; ipdb.set_trace()
+    bytes = get_local_speech_from_text(corpus)
+    with open('/tmp/ggg.wav', 'wb') as f:
+        f.write(bytes)
+
 
     assert get_normalized_input_hash("my frog has fleas.") == get_normalized_input_hash(
         " My \t frog $ has _ -  fleas! \t "
