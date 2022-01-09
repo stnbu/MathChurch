@@ -11,19 +11,9 @@ the presentation (or whoever wants to).
 """
 
 from types import FunctionType
-from .tts import *
-from mutagen.mp3 import MP3
+from tts import *
 from manim import *
 
-
-YES_YOU_PRINT_HEADER = False
-def log_about_to_add_sound(length, path, offset):
-    global YES_YOU_PRINT_HEADER
-    format = '%s\t%s\t%s'
-    if not YES_YOU_PRINT_HEADER:
-        print(format % ('length', 'path', 'offset'))
-        YES_YOU_PRINT_HEADER = True
-    print(format % (length, path, offset))
 
 def get_wav_len(path):
     import wave
@@ -35,30 +25,46 @@ def get_wav_len(path):
         duration = frames / float(rate)
     return duration
 
+LOGNUM = 0
+def lognum():
+    global LOGNUM
+    logger.info("lognum %s" % LOGNUM)
+    LOGNUM += 1
+
 class Player:
     def __init__(self, scene, lecture):
         self.scene = scene
         self.lecture = lecture
 
     def play(self):
-        offset = 0
+        global LOGNUM
         for item in self.lecture:
+            LOGNUM = 0
             if isinstance(item, str):
                 if (item.strip() == ""):
                     # because we do not want an empty mp3 file.
                     continue
                 _, path = osx_alex_say_subproc(item)
                 length = get_wav_len(path)
-                log_about_to_add_sound(length, path, offset)
+                logger.info("File %s has play time %s and corresponds to input "
+                            "text of length %s characters." % (path, length, len(item)))
+                lognum()
                 self.scene.add_sound(path)
+                lognum()
                 wait = length + 0.2
-                offset += wait
+                lognum()
                 subtitle = Text(item)
+                lognum()
                 subtitle.scale(0.5)
+                lognum()
                 subtitle.to_edge(DOWN)
+                lognum()
                 self.scene.add(subtitle)
+                logger.info("We will be adding a pause to the video of %s seconds" % wait)
                 self.scene.wait(wait)
+                lognum()
                 self.scene.remove(subtitle)
+                lognum()
             elif isinstance(item, FunctionType):
                 item(self.scene)
             else:
@@ -97,20 +103,9 @@ if __name__ == "__main__":
     ]
 
     scene = Scene()
-    """
-config.verbosity
-config.disable_caching
-frame_rate
-upto_animation_number
-partial_movie_dir {video_dir}/partial_movie_files/{scene_name}
-quality
-media_dir
-write_all = False #### False?!
-log_to_file = False
-text_dir (4 subs??
-"""
-    config.preview = True
-    #import ipdb; ipdb.set_trace()
+    #config.quality = 'low_quality'
+    #config.flush_cache = True
+    #config.max_files_cached = 0
     player = Player(scene, lecture)
     player.play()
     scene.render()
