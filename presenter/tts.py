@@ -51,26 +51,30 @@ def osx_alex_say_subproc(input):
     import subprocess
 
 
-    path = get_audio_cache_path(input, "alex", "aiff")
-    
+    path = get_audio_cache_path(input, "alex", "wav")
+
     if os.path.exists(path):
         logger.info("cache hit for %s" % path)
         return None, path
     logger.info("cache miss for %s" % path)
 
-    command = ["say", "-v", "Alex", input, "-o", path]
+    command = ["say", "--data-format=LEI32@22050", "-v", "Alex", input, "-o", path]
+    #print(' '.join(command))
+    #import sys; sys.exit(0)
     logger.info("Running: Popen(%s)" % (command))
-    proc = subprocess.Popen(command)
-    proc.wait(timeout=2)
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = proc.communicate()
     logger.info("Popen(%s) exitied with status %d" % (command, proc.returncode))
+    logger.info("STDOUT>%s" % out)
+    logger.info("STDERR>%s" % err)
     return None, path
 
-corpus = "This is a long, annoying sentence that will make 'Alex' sweat. Here is the next sentence. Can Alex ask questions? " * 3
-
-p = osx_alex_say_subproc(corpus)
-print(p)
-
-import sys; sys.exit(0)
+#corpus = "This is a long, annoying sentence that will make 'Alex' sweat. Here is the next sentence. Can Alex ask questions? " * 3
+#
+#p = osx_alex_say_subproc(corpus)
+#rint(p)
+#
+#import sys; sys.exit(0)
 
 
 def get_audio_bytes(input, bytes_getter):

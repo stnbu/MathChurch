@@ -25,6 +25,15 @@ def log_about_to_add_sound(length, path, offset):
         YES_YOU_PRINT_HEADER = True
     print(format % (length, path, offset))
 
+def get_wav_len(path):
+    import wave
+    import contextlib
+    duration = 0.0
+    with contextlib.closing(wave.open(path,'r')) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        duration = frames / float(rate)
+    return duration
 
 class Player:
     def __init__(self, scene, lecture):
@@ -38,10 +47,10 @@ class Player:
                 if (item.strip() == ""):
                     # because we do not want an empty mp3 file.
                     continue
-                _, path = get_audio_bytes(item, get_google_speech_from_text)
-                length = MP3(path).info.length
+                _, path = osx_alex_say_subproc(item)
+                length = get_wav_len(path)
                 log_about_to_add_sound(length, path, offset)
-                self.scene.add_sound(path, time_offset=offset)
+                self.scene.add_sound(path)
                 wait = length + 0.2
                 offset += wait
                 subtitle = Text(item)
