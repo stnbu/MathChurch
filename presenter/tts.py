@@ -7,12 +7,13 @@
 Note that we assume "mp3 throughout". It's hard-coded here and there.
 """
 
-import re, hashlib, os, logging
+from manim import logger
+
+import re, hashlib, os #, logging
 from google.cloud import texttospeech
 
-
 def get_google_speech_from_text(input):
-    logging.warning(
+    logger.warning(
         "Performing TTS operation using Google Cloud Text-to-speech. This may cost actual money."
     )
     client = texttospeech.TextToSpeechClient()
@@ -40,19 +41,45 @@ def get_normalized_input_hash(input):
     return hashlib.sha224(result.encode()).hexdigest()
 
 
-def get_audio_cache_path(hash):
-    path = os.path.join("media", "audio", hash + ".mp3")
+def get_audio_cache_path(input, engine, format):
+    hash = get_normalized_input_hash(input)
+    path = os.path.join("media", "audio", engine, hash + "." + format)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     return path
+
+def osx_alex_say_subproc(input):
+    import subprocess
+
+
+    path = get_audio_cache_path(input, "alex", "aiff")
+    
+    if os.path.exists(path):
+        logger.info("cache hit for %s" % path)
+        return None, path
+    logger.info("cache miss for %s" % path)
+
+    command = ["say", "-v", "Alex", input, "-o", path]
+    logger.info("Running: Popen(%s)" % (command))
+    proc = subprocess.Popen(command)
+    proc.wait(timeout=2)
+    logger.info("Popen(%s) exitied with status %d" % (command, proc.returncode))
+    return None, path
+
+corpus = "This is a long, annoying sentence that will make 'Alex' sweat. Here is the next sentence. Can Alex ask questions? " * 3
+
+p = osx_alex_say_subproc(corpus)
+print(p)
+
+import sys; sys.exit(0)
 
 
 def get_audio_bytes(input, bytes_getter):
     hash = get_normalized_input_hash(input)
     path = get_audio_cache_path(hash)
     if os.path.exists(path):
-        logging.info("cache hit for %s" % hash)
+        logger.info("cache hit for %s" % hash)
         return open(path, "rb").read(), path
-    logging.info("cache miss for %s" % hash)
+    logger.info("cache miss for %s" % hash)
     audio_bytes = bytes_getter(input)
     with open(path, "wb") as f:
         f.write(audio_bytes)
