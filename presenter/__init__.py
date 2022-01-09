@@ -25,46 +25,30 @@ def get_wav_len(path):
         duration = frames / float(rate)
     return duration
 
-LOGNUM = 0
-def lognum():
-    global LOGNUM
-    logger.info("lognum %s" % LOGNUM)
-    LOGNUM += 1
-
 class Player:
     def __init__(self, scene, lecture):
         self.scene = scene
         self.lecture = lecture
 
     def play(self):
-        global LOGNUM
         for item in self.lecture:
-            LOGNUM = 0
             if isinstance(item, str):
                 if (item.strip() == ""):
                     # because we do not want an empty mp3 file.
                     continue
-                _, path = osx_alex_say_subproc(item)
+                path = osx_alex_say_subproc(item)
                 length = get_wav_len(path)
                 logger.info("File %s has play time %s and corresponds to input "
                             "text of length %s characters." % (path, length, len(item)))
-                lognum()
                 self.scene.add_sound(path)
-                lognum()
                 wait = length + 0.2
-                lognum()
                 subtitle = Text(item)
-                lognum()
                 subtitle.scale(0.5)
-                lognum()
                 subtitle.to_edge(DOWN)
-                lognum()
                 self.scene.add(subtitle)
                 logger.info("We will be adding a pause to the video of %s seconds" % wait)
                 self.scene.wait(wait)
-                lognum()
                 self.scene.remove(subtitle)
-                lognum()
             elif isinstance(item, FunctionType):
                 item(self.scene)
             else:
