@@ -11,6 +11,7 @@ the presentation (or whoever wants to).
 """
 
 from types import FunctionType
+from mutagen.mp3 import MP3
 from tts import *
 from manim import *
 
@@ -25,6 +26,7 @@ def get_wav_len(path):
         duration = frames / float(rate)
     return duration
 
+
 class Player:
     def __init__(self, scene, lecture):
         self.scene = scene
@@ -36,8 +38,9 @@ class Player:
                 if (item.strip() == ""):
                     # because we do not want an empty mp3 file.
                     continue
-                path = osx_alex_say_subproc(item)
-                length = get_wav_len(path)
+                path = get_google_speech_from_text(item) #osx_alex_say_subproc(item)
+                #length = get_wav_len(path)
+                length = MP3(path).info.length
                 logger.info("File %s has play time %s and corresponds to input "
                             "text of length %s characters." % (path, length, len(item)))
                 self.scene.add_sound(path)
