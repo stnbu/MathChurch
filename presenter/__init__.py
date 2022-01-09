@@ -16,13 +16,23 @@ from mutagen.mp3 import MP3
 from manim import *
 
 
+YES_YOU_PRINT_HEADER = False
+def log_about_to_add_sound(length, path, offset):
+    global YES_YOU_PRINT_HEADER
+    format = '%s\t%s\t%s'
+    if not YES_YOU_PRINT_HEADER:
+        print(format % ('length', 'path', 'offset'))
+        YES_YOU_PRINT_HEADER = True
+    print(format % (length, path, offset))
+
+
 class Player:
     def __init__(self, scene, lecture):
         self.scene = scene
         self.lecture = lecture
 
     def play(self):
-        current_offset = 0
+        offset = 0
         for item in self.lecture:
             if isinstance(item, str):
                 if (item.strip() == ""):
@@ -30,12 +40,15 @@ class Player:
                     continue
                 _, path = get_audio_bytes(item, get_google_speech_from_text)
                 length = MP3(path).info.length
-                self.scene.add_sound(path, time_offset=current_offset)
+                log_about_to_add_sound(length, path, offset)
+                self.scene.add_sound(path, time_offset=offset)
+                wait = length + 0.2
+                offset += wait
                 subtitle = Text(item)
                 subtitle.scale(0.5)
                 subtitle.to_edge(DOWN)
                 self.scene.add(subtitle)
-                self.scene.wait(length)
+                self.scene.wait(wait)
                 self.scene.remove(subtitle)
             elif isinstance(item, FunctionType):
                 item(self.scene)
@@ -75,6 +88,20 @@ if __name__ == "__main__":
     ]
 
     scene = Scene()
+    """
+config.verbosity
+config.disable_caching
+frame_rate
+upto_animation_number
+partial_movie_dir {video_dir}/partial_movie_files/{scene_name}
+quality
+media_dir
+write_all = False #### False?!
+log_to_file = False
+text_dir (4 subs??
+"""
+    config.preview = True
+    #import ipdb; ipdb.set_trace()
     player = Player(scene, lecture)
     player.play()
     scene.render()
