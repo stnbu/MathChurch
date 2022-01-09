@@ -11,7 +11,7 @@ the presentation (or whoever wants to).
 """
 
 from types import FunctionType
-from .gtts import *
+from .tts import *
 from mutagen.mp3 import MP3
 from manim import *
 
