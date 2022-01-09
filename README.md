@@ -39,11 +39,11 @@ I'll try to summarize/reign in the/my own chaos:
 Mini-roadmap:
 
 1. Find a "dev-mode" solution to TTS:
-  * Get `pyttsx3` or similar to work. It might end up being more straight forward to call `say` with `Subproc` (or whatever it's called now) and print the filename (only) for return value. [Here](https://github.com/nateshmbhat/pyttsx3/issues/177#issuecomment-1008033309) is a comment from me about the bug-in-question.
-  * _And also_/_Or_ whip up a better-quality "subs-duration-estimator" (e.g. divide word count by a reasonable words-per-second value...tweak as needed).
+** Get `pyttsx3` or similar to work. It might end up being more straight forward to call `say` with `Subproc` (or whatever it's called now) and print the filename (only) for return value. [Here](https://github.com/nateshmbhat/pyttsx3/issues/177#issuecomment-1008033309) is a comment from me about the bug-in-question.
+** _And also_/_Or_ whip up a better-quality "subs-duration-estimator" (e.g. divide word count by a reasonable words-per-second value...tweak as needed).
 1. Get such that you can easily consume e.g. [this](https://discord.com/channels/927656471599149117/927656472203112461/929421225686622249) or similar, coordinating with author.
 1. Finish reasonable "subtitle chunk" abstraction, possibly with [this](https://github.com/stnbu/MathChurch/blob/4ea56db05e62f0a1d1ce8c3ce0ab4085d8c6fd59/presenter/the_subtitle_class_poc.py) as inspiration.
 1. Whatever the input format, get some things in the queue:
-  * Negative numbers/subtraction/symbolism in math.
-  * Continuous fractions representation of $$\pi$$.
-  * Maybe steal some of Grant's output and re-do with subs-to-speech in place of narrator.
+** Negative numbers/subtraction/symbolism in math.
+** Continuous fractions representation of $$\pi$$.
+** Maybe steal some of Grant's output and re-do with subs-to-speech in place of narrator.
