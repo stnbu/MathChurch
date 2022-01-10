@@ -53,7 +53,12 @@ Manim Community v0.13.1
 
 [![Subs 2 Video](http://img.youtube.com/vi/_c5xLnW9Eo0/0.jpg)](http://www.youtube.com/watch?v=_c5xLnW9Eo0 "Subs 2 Video")
 
-If you're adventurous, set up Google Cloud Services Text-to-Speech and exporting the `GOOGLE_APPLICATION_CREDENTIALS` environment variable with the path to your credentials JSON file and then modifying `demo.py` thusly:
+If you're feeling adventurous...
+
+1. Set up Google Cloud Services Text-to-Speech
+1. Export the `GOOGLE_APPLICATION_CREDENTIALS` environment variable with the path to
+your credentials JSON file
+1. Modify `demo.py` thusly:
 
 ```diff
 @@ -39,6 +39,6 @@
