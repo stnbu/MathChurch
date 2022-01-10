@@ -53,6 +53,19 @@ Manim Community v0.13.1
 
 [![Subs 2 Video](http://img.youtube.com/vi/_c5xLnW9Eo0/0.jpg)](http://www.youtube.com/watch?v=_c5xLnW9Eo0 "Subs 2 Video")
 
+If you set up Google Cloud Services Text-to-Speech correctly and export the `GOOGLE_APPLICATION_CREDENTIALS` with the path to your credentials JSON file, try replacing "local" TTS with "google" TTS:
+
+```diff
+@@ -39,6 +39,6 @@
+ config.quality = "low_quality"
+ scene = Scene()
+ # you may also try: silence_tts, google_tts
+-player = Player(scene, lecture, local_tts)
++player = Player(scene, lecture, google_tts)
+ player.play()
+ scene.render()
+```
+
 ## Hey, where do you think you're going with this thing?
 
 I'll try to summarize/reign in the/my own chaos:
