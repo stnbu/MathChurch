@@ -1,4 +1,4 @@
-from presenter import *
+from pulpit import *
 
 pills = MathTex(r"hand.holding(red_pill, blue_pill)")
 negative_three = MathTex(r"-3")
@@ -146,6 +146,6 @@ lecture = [
 ]
 
 scene = Scene()
-player = Player(scene, lecture)
+player = Player(scene, lecture, local_tts)
 player.play()
 scene.render()
