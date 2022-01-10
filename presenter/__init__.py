@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """Demo of a concept:
 
 Let the _subtitles_ drive the video/presentation. Then you can text-to-speech
