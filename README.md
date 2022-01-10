@@ -41,6 +41,9 @@ pip install git+https://github.com/stnbu/MathChurch.git # or "editable mode" if 
 
 ## Run
 
+> ⚠ Note that caching has implications not yet understood #3
+> Play it safe and `rm -rf ./media` between runs.
+
 Once your laptop cools down, you should be able to run `./demo.py` which will print the path to its output file: an MPEG-4 video file hopefully with both subtitles and audio.
 
 The output will look something like this:
