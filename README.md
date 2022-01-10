@@ -36,9 +36,10 @@ pip install git+https://github.com/stnbu/MathChurch.git # or "editable mode" if 
 
 Once your laptop cools down, you should be able to run `./demo.py` which will print the path to its output file: an MPEG-4 video file hopefully with both subtitles and audio.
 
-You will see something like:
+The output will look something like this:
 
 ```
+$ ./demo.py
 Manim Community v0.13.1
 
 [01/10/22 09:59:45] INFO Writing "h(u*v)=h(u) \odot h(v)" to media/Tex/000.tex scene_file_writer.py:749
