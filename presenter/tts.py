@@ -4,27 +4,27 @@
 import hashlib, os
 from manim import logger
 
-def silent_tts(input):
-    import wave
-    #"5292000" # total byte count silent 30s clip.
-    #"176400" # bytes-per-second of silence (nulls)
-    length = 30
-    sample_rate = 44100
-    wav = wave.Wave_write("/tmp/test30_.wav")
-    wav.setnchannels(1)
-    wav.setsampwidth(1)
-    wav.setframerate(sample_rate)
-    wav.writeframes(b'\x00' * sample_rate * length)
-    wav.close()
-
-silent_tts("")
-import sys; sys.exit(0)
-
 def get_audio_path(input, engine, format):
     hash = hashlib.sha224(input.encode()).hexdigest()
     path = os.path.join("media", "audio", engine, hash + "." + format)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     return path
+
+def silence_tts(input):
+    """Crude/effective subtitles silent clip generator.
+
+    FEATURE: There is a little audible "tap-tap" when the subtitles change. This cues the reader about the next set of subtitles to read.
+    """
+    import wave
+    length = len(input.split(' ')) / 250 * 60
+    sample_rate = 44100
+    path = get_audio_path(input, "silence", "wav")
+    with wave.Wave_write(path) as f:
+        f.setnchannels(1)
+        f.setsampwidth(1)
+        f.setframerate(sample_rate)
+        f.writeframes(b'\x00' * int(sample_rate * length))
+    return path, length
 
 def local_tts(input):
     import subprocess
