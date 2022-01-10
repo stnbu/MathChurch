@@ -9,5 +9,5 @@ setup(
     author="Mike Burr",
     author_email="mb+church@unintuitive.org",
     url="https://github.com/stnbu/MathChurch",
-    packages=["presenter"],
+    packages=["pulpit"],
 )

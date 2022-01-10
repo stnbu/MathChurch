@@ -7,7 +7,7 @@ These test may:
 """
 
 import os
-from presenter.tts import *
+from pulpit.tts import *
 
 import unittest
 
