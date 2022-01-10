@@ -10,27 +10,16 @@ the presentation (or whoever wants to).
 """
 
 from types import FunctionType
-from mutagen.mp3 import MP3
 from tts import *
 from manim import *
 
 
-def get_wav_len(path):
-    import wave
-    import contextlib
-
-    duration = 0.0
-    with contextlib.closing(wave.open(path, "r")) as f:
-        frames = f.getnframes()
-        rate = f.getframerate()
-        duration = frames / float(rate)
-    return duration
-
 
 class Player:
-    def __init__(self, scene, lecture):
+    def __init__(self, scene, lecture, tts_engine):
         self.scene = scene
         self.lecture = lecture
+        self.tts_engine = tts_engine
 
     def play(self):
         for item in self.lecture:
@@ -38,8 +27,7 @@ class Player:
                 if item.strip() == "":
                     # because we do not want an empty mp3 file.
                     continue
-                path = osx_alex_say_subproc(item)
-                length = get_wav_len(path)
+                path, length = self.tts_engine(item)
                 logger.info(
                     "File %s has play time %s and corresponds to input "
                     "text of length %s characters." % (path, length, len(item))
@@ -93,9 +81,6 @@ if __name__ == "__main__":
     ]
 
     scene = Scene()
-    # config.quality = 'low_quality'
-    # config.flush_cache = True
-    # config.max_files_cached = 0
-    player = Player(scene, lecture)
+    player = Player(scene, lecture, local_tts)
     player.play()
     scene.render()
