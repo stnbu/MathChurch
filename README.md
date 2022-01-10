@@ -20,6 +20,8 @@ The main attraction is `demo.py`. You can run `demo.py` by following these instr
 >   1. You are running a recent OSX on Intel Mac hardware (M1: keep reading)
 >   2. The "python3" on your system is Python 3.9.9 (or close)
 
+Note that the `/usr/bin/python3` (3.8.2) bundled with Big Sur `11.6.1 20G224` gave me lots of trouble. YMMV. I've been using the `python@3.9` distributed by brew.
+
 As per [the manim installation instructions](https://docs.manim.community/en/stable/installation/macos.html#macos), you need to install the command line tools `py3cairo` and `ffmpeg` via brew.
 
 > M1 processors will also need to have `cmake`, `pango`, and `scipy`.
