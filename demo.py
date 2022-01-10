@@ -5,7 +5,7 @@ text-to-speech audio.
 Note that this will write files to a `./media` directory.
 """
 
-from presenter import *
+from pulpit import *
 
 impressive_equation = MathTex(r"h(u*v)=h(u) \odot h(v)")
 
