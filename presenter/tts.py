@@ -15,7 +15,8 @@ def get_audio_path(input, engine, format):
 def silence_tts(input):
     """Crude/effective subtitles silent clip generator.
 
-    FEATURE: There is a little audible "tap-tap" when the subtitles change. This cues the reader about the next set of subtitles to read.
+    FEATURE: There is a little audible "tap-tap" when the subtitles change. This
+             cues the reader about the next set of subtitles to read.
     """
     import wave
 
