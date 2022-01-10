@@ -18,8 +18,9 @@ from manim import *
 def get_wav_len(path):
     import wave
     import contextlib
+
     duration = 0.0
-    with contextlib.closing(wave.open(path,'r')) as f:
+    with contextlib.closing(wave.open(path, "r")) as f:
         frames = f.getnframes()
         rate = f.getframerate()
         duration = frames / float(rate)
@@ -34,21 +35,24 @@ class Player:
     def play(self):
         for item in self.lecture:
             if isinstance(item, str):
-                if (item.strip() == ""):
+                if item.strip() == "":
                     # because we do not want an empty mp3 file.
                     continue
-                path = get_google_speech_from_text(item) #osx_alex_say_subproc(item)
-                #length = get_wav_len(path)
-                length = MP3(path).info.length
-                logger.info("File %s has play time %s and corresponds to input "
-                            "text of length %s characters." % (path, length, len(item)))
+                path = osx_alex_say_subproc(item)
+                length = get_wav_len(path)
+                logger.info(
+                    "File %s has play time %s and corresponds to input "
+                    "text of length %s characters." % (path, length, len(item))
+                )
                 self.scene.add_sound(path)
                 wait = length + 0.2
                 subtitle = Text(item)
                 subtitle.scale(0.5)
                 subtitle.to_edge(DOWN)
                 self.scene.add(subtitle)
-                logger.info("We will be adding a pause to the video of %s seconds" % wait)
+                logger.info(
+                    "We will be adding a pause to the video of %s seconds" % wait
+                )
                 self.scene.wait(wait)
                 self.scene.remove(subtitle)
             elif isinstance(item, FunctionType):
@@ -89,9 +93,9 @@ if __name__ == "__main__":
     ]
 
     scene = Scene()
-    #config.quality = 'low_quality'
-    #config.flush_cache = True
-    #config.max_files_cached = 0
+    # config.quality = 'low_quality'
+    # config.flush_cache = True
+    # config.max_files_cached = 0
     player = Player(scene, lecture)
     player.play()
     scene.render()
