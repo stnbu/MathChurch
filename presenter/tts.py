@@ -1,18 +1,62 @@
-"""Speech Therapy
-
-* https://github.com/googleapis/python-texttospeech
-* https://cloud.google.com/text-to-speech/docs/libraries
-* https://www.w3.org/TR/speech-synthesis/ (with SSML reference)
-
-Note that we assume "mp3 throughout". It's hard-coded here and there.
+"""Text to speech
 """
 
-import re, hashlib, os, logging
-from google.cloud import texttospeech
+import hashlib, os
+from manim import logger
 
 
-def get_google_speech_from_text(input):
-    logging.warning(
+def get_audio_path(input, engine, format):
+    hash = hashlib.sha224(input.encode()).hexdigest()
+    path = os.path.join("media", "audio", engine, hash + "." + format)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    return path
+
+
+def silence_tts(input):
+    """Crude/effective subtitles silent clip generator.
+
+    FEATURE: There is a little audible "tap-tap" when the subtitles change. This
+             cues the reader about the next set of subtitles to read.
+    """
+    import wave
+
+    length = len(input.split(" ")) / 250 * 60
+    sample_rate = 44100
+    path = get_audio_path(input, "silence", "wav")
+    with wave.Wave_write(path) as f:
+        f.setnchannels(1)
+        f.setsampwidth(1)
+        f.setframerate(sample_rate)
+        f.writeframes(b"\x00" * int(sample_rate * length))
+    return path, length
+
+
+def local_tts(input):
+    import subprocess
+    import wave
+    import contextlib
+
+    path = get_audio_path(input, "local", "wav")
+    command = ["say", "--data-format=LEI16", "-v", "Alex", input, "-o", path]
+    logger.debug("Running: Popen(%s)" % (command))
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = proc.communicate()
+    logger.debug("Popen(%s) exitied with status %d" % (command, proc.returncode))
+    logger.debug("STDOUT>%s" % out)
+    logger.debug("STDERR>%s" % err)
+    length = 0.0
+    with contextlib.closing(wave.open(path, "r")) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        length = frames / float(rate)
+    return path, length
+
+
+def google_tts(input):
+    from mutagen.mp3 import MP3
+    from google.cloud import texttospeech
+
+    logger.warning(
         "Performing TTS operation using Google Cloud Text-to-speech. This may cost actual money."
     )
     client = texttospeech.TextToSpeechClient()
@@ -26,59 +70,7 @@ def get_google_speech_from_text(input):
     response = client.synthesize_speech(
         input=synthesis_input, voice=voice, audio_config=audio_config
     )
-    return response.audio_content
-
-
-def get_normalized_input_hash(input):
-    """Crude, heavy-handed normalization of input. Return its hash.
-
-    Text to speech is currently done by GCS. Runaway requests are bad.
-    """
-    result = re.sub(r"[^\w ]|[_\d]", "", input)
-    result = re.sub(r"\s+", " ", result).strip().lower()
-    # some hash
-    return hashlib.sha224(result.encode()).hexdigest()
-
-
-def get_audio_cache_path(hash):
-    path = os.path.join("media", "audio", hash + ".mp3")
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    return path
-
-
-def get_audio_bytes(input, bytes_getter):
-    hash = get_normalized_input_hash(input)
-    path = get_audio_cache_path(hash)
-    if os.path.exists(path):
-        logging.info("cache hit for %s" % hash)
-        return open(path, "rb").read(), path
-    logging.info("cache miss for %s" % hash)
-    audio_bytes = bytes_getter(input)
+    path = get_audio_path(input, "google", "mp3")
     with open(path, "wb") as f:
-        f.write(audio_bytes)
-    return audio_bytes, path
-
-
-if __name__ == "__main__":
-
-    assert get_normalized_input_hash("my frog has fleas.") == get_normalized_input_hash(
-        " My \t frog $ has _ -  fleas! \t "
-    )
-
-    def _test_bytes_getter(input):
-        return input.encode()
-
-    def _exceptional_bytes_get(input):
-        raise AssertionError
-
-    bytes1, path1 = get_audio_bytes("hi planet", _test_bytes_getter)
-    bytes2, path2 = get_audio_bytes("hi planet!!", _exceptional_bytes_get)
-
-    assert bytes1 == bytes2
-    assert path1 == path2
-
-    # # This works, but it will consume API resources (your money).
-    # text = "Hello, World!"
-    # the_bytes = get_audio_bytes(text, get_google_speech_from_text)
-    # with open("test.mp3", "wb") as f:  # should be in your cache too.
-    #     f.write(the_bytes)
+        f.write(response.audio_content)
+    return path, MP3(path).info.length
