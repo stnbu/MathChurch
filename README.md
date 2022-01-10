@@ -29,7 +29,6 @@ brew install py3cairo ffmpeg
 [ $(uname -m) = "arm64" ] && brew install cmake pango scipy # untested
 python3 -m venv ~/mc_demo_venv
 source ~/mc_demo_venv/bin/activate
-# the following takes ~25 mins
 pip -qqq install manim google-cloud-texttospeech mutagen # the latter two only for GCSTTS
 pip install git+https://github.com/stnbu/MathChurch.git # or "editable mode" if you prefer
 ```
