@@ -46,4 +46,3 @@ class Player:
                 item(self.scene)
             else:
                 raise ValueError
-
