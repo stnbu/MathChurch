@@ -12,23 +12,43 @@ If subtitles are suboptimal for whatever reason, a human can easily just record 
 
 Join [the discord server](https://discord.gg/XTHcHc7N) and ask the friendly folks you meet there about how to contribute (plain old hanging out is encouraged also.)
 
-# State-of-the-Church
+# Install and run the demo
 
-You can run
+The main attraction is `demo.py`. You can run `demo.py` by following these instructions.
+
+> ⚠ Assumptions:
+>   1. You are running a recent OSX on Intel Mac hardware (M1: keep reading)
+>   2. You are "python3" on your system is Python 3.9.9
+
+As per [the manim installation instructions](https://docs.manim.community/en/stable/installation/macos.html#macos), you need to install the command line tools `py3cairo` and `ffmpeg` via brew.
+
+> M1 processors will also need to have `cmake`, `pango`, and `scipy`.
 
 ```
-python play/presenter.py
+brew install py3cairo ffmpeg
+[ $(uname -m) = "arm64" ] && brew install cmake pango scipy # untested
+python3 -m venv ~/mc_demo_venv
+source ~/mc_demo_venv/bin/activate
+# the following takes ~25 mins
+pip -qqq install manim google-cloud-texttospeech mutagen # the latter two only for GCSTTS
+pip install git+https://github.com/stnbu/MathChurch.git # or "editable mode" if you prefer
 ```
 
-After satisfying all prerequisites.
+Once your laptop cools down, you should be able to run `./demo.py` which will print the path to its output file: an MPEG-4 video file hopefully with both subtitles and audio.
 
-Hints:
+You will see something like:
 
-* Signing up for Google Text-to-Speech is a pain in the ass. Good luck!
-* Other than that, manim is probably the most challenging thing. See their [excellent docs](https://docs.manim.community/en/stable).
-* Holler. Submit an issue. Open a PR. and/or [Join the Discord](https://discord.gg/XTHcHc7N).
+```
+Manim Community v0.13.1
 
-As of fab59a85a2e142f065b4921f9fc076caa6b67267, the output of `python play/presenter.py` looks like this (Youtube video link):
+[01/10/22 09:59:45] INFO Writing "h(u*v)=h(u) \odot h(v)" to media/Tex/000.tex scene_file_writer.py:749
+ . . . lines of logs . . .
+                        File ready at '/cwd/media/videos/480p15/Scene.mp4'
+ . . . lines of logs . . .
+                             Played 9 animations
+```
+
+`Scene.mp4` is a video that should look and sound something like this:
 
 [![Subs 2 Video](http://img.youtube.com/vi/_c5xLnW9Eo0/0.jpg)](http://www.youtube.com/watch?v=_c5xLnW9Eo0 "Subs 2 Video")
 
