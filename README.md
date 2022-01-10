@@ -24,6 +24,10 @@ As per [the manim installation instructions](https://docs.manim.community/en/sta
 
 > M1 processors will also need to have `cmake`, `pango`, and `scipy`.
 
+## Install
+
+These commands should work. Reflect and refine to taste.
+
 ```
 brew install py3cairo ffmpeg
 [ $(uname -m) = "arm64" ] && brew install cmake pango scipy # untested
@@ -32,6 +36,8 @@ source ~/mc_demo_venv/bin/activate
 pip -qqq install manim google-cloud-texttospeech mutagen # the latter two only for GCSTTS
 pip install git+https://github.com/stnbu/MathChurch.git # or "editable mode" if you prefer
 ```
+
+## Run
 
 Once your laptop cools down, you should be able to run `./demo.py` which will print the path to its output file: an MPEG-4 video file hopefully with both subtitles and audio.
 
