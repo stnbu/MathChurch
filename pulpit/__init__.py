@@ -20,8 +20,10 @@ class Player:
         self.lecture = lecture
         self.tts_engine = tts_engine
 
-    def play(self):
-        for item in self.lecture:
+    def play(self, count=None):
+        for index, item in enumerate(self.lecture):
+            if count is not None and index + 1 == count:
+                break
             if isinstance(item, str):
                 if item.strip() == "":
                     # because we do not want an empty mp3 file.
