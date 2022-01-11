@@ -50,17 +50,4 @@ class SubRipFile:
     def write_to(self, path):
         with open(path, "w") as f:
             f.write(self.get_file_contents())
-        logger.error("SubRip file written to: %s" % path)
-
-
-if __name__ == "__main__":
-    srf = SubRipFile(
-        SubRipChunk(0, 1, "my first text"),
-        SubRipChunk(2, 3.3, "my second text"),
-        SubRipChunk(3.9, 5.1234, "my\n..build-up"),
-        SubRipChunk(6, 7, "the BIG crachendo"),
-        SubRipChunk(8, 9.54321, "my lame let-down"),
-        SubRipChunk(10, 1000, "fin"),
-    )
-    print(srf.get_file_contents())
-    srf.write_to("/tmp/foo.srt")
+        logger.info("SubRip file written to: %s" % path)
