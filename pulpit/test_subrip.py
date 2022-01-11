@@ -20,6 +20,7 @@ class SubsTests(unittest.TestCase):
         )
         srf.write_to(srt_file_name)
         got = ""
+        expected = "1\n00:00:01,000 --> 00:00:09,256\nSomebody set up us the bomb.\n\n"
         with open(srt_file_name) as f:
             got = f.read()
         assert got == expected
