@@ -14,6 +14,7 @@ from .tts import *
 from .subrip import *
 from manim import *
 
+
 class Player:
     def __init__(self, scene, lecture, tts_engine):
         self.scene = scene
@@ -38,20 +39,20 @@ class Player:
                 self.scene.add_sound(path)
 
                 disappear = self.offset + length
-                self.subrip_file.add(SubRipChunk(
-                    appear=self.offset,
-                    disappear=disappear,
-                    text=item
-                ))
+                self.subrip_file.add(
+                    SubRipChunk(appear=self.offset, disappear=disappear, text=item)
+                )
                 self.offset = disappear
 
                 self.scene.wait(length)
-
 
             elif isinstance(item, FunctionType):
                 item(self.scene)
             else:
                 raise ValueError
 
-        subrip_file_path = os.path.splitext(self.scene.renderer.file_writer.movie_file_path)[0] + '.srt'
+        subrip_file_path = (
+            os.path.splitext(self.scene.renderer.file_writer.movie_file_path)[0]
+            + ".srt"
+        )
         self.subrip_file.write_to(subrip_file_path)
