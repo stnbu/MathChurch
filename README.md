@@ -83,7 +83,7 @@ your credentials JSON file
 
 ### Try running `tbob`?!
 
-`tbob` (`t`hree`b`lue`o`ne`b`rown) tries to make it possible to run [the scripts](https://github.com/3b1b/videos) used to create [3b1b](https://www.3blue1brown.com/) [content](https://www.youtube.com/c/3blue1brown) content.
+`tbob` (`t`hree`b`lue`o`ne`b`rown) tries to make it possible to run [the scripts](https://github.com/3b1b/videos) used to create [3b1b](https://www.3blue1brown.com/) [content](https://www.youtube.com/c/3blue1brown).
 
 It does this by:
 
