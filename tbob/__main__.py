@@ -99,12 +99,10 @@ def main():
     manim_repo_path = os.path.join(TBOB_DIR, "manim")
     venv_path = os.path.join(TBOB_DIR, "venv")
 
-    this_script = os.path.basename(__file__)
-
     help = "\n".join(
         [
             "",
-            "USAGE: {this_script} repo-relative/path/to/manim/script.py",
+            "USAGE: tbob repo-relative/path/to/manim/script.py",
             "",
             "Please note: We are using Grant Sanderson's 3blue1brown version of mainm.",
             "If you are experimenting with manim or using it in a project. Please see this URL:",
@@ -162,9 +160,10 @@ def main():
         message = "\n".join([
             "You still must manually do the following but only once:",
             "",
-            "    ~$ source {venv_path}/bin/activate"
+            "    ~$ source {venv_path}/bin/activate",
             "    ~$ cd {manim_repo_path}",
             "    ~$ pip install -e .",
+            "",
         ]).format(**locals())
         print(message)
 

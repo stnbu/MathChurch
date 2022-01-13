@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
     name="MathChurch",
-    version="0.0.5",
+    version="0.0.6",
     description="Subs-driven presentation, with TTS audio (and more)",
     author="Mike Burr",
     author_email="mb+church@unintuitive.org",
