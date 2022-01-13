@@ -5,6 +5,7 @@
 
 import os
 import sys
+from glob import glob
 import venv
 import subprocess
 from git import Repo
@@ -156,5 +157,23 @@ def main():
 
     print(summary)
 
+    links = glob(os.path.join(venv_path, 'lib', 'python*', 'site-packages', 'manim*.egg-link'))
+    if len(links) == 0:
+        message = "\n".join([
+            "You still must manually do the following but only once:",
+            "",
+            "    ~$ source {venv_path}/bin/activate"
+            "    ~$ cd {manim_repo_path}",
+            "    ~$ pip install -e .",
+        ]).format(**locals())
+        print(message)
 
-main()
+    message = "\n".join([
+        "Having done the above, you should be able to:",
+        "",
+        "    ~$ cd {videos_repo_path}",
+        "    ~$ source {venv_path}/bin/activate",
+        "    ~$ manim-render <options> {script_path} [ClassName]",
+        "",
+    ]).format(**locals())
+    print(message)
