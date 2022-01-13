@@ -118,7 +118,6 @@ def main():
         "",
         "    https://www.manim.community/",
         "",
-        "It's not recommended to use https://github.com/3b1b/manim for new projects.",
         "",
         "The purpose of `tbob` is to make it easier to 'play' the videos featured in",
         "3b1b/videos: We need to figure out what _version_ of 3b1b/manim to use in a",
@@ -131,16 +130,18 @@ def main():
         "_before_ that time, hopefully having the right version of mainim for the file/script",
         "",
         "Your 3b1b video playing environment:",
-        "    videos repo: %s",
-        "    manim repo: %s",
-        "    virtual env: %s",
+        "    videos repo: {videos_repo_path}",
+        "    manim repo: {manim_repo_path}",
+        "    virtual env: {venv_path}",
         "",
-        "The last commit to %s was %s at %s",
+        "The last commit to {script_path} was {videos_commit} at {videos_commit.authored_date}",
         "",
-        "We found commit %s in manim which has epoch %s and manim has been reverted to commit",
+        "We found commit {manim_commit} in manim which has epoch {manim_commit.authored_date}",
+        "",
+        "The repo at {manim_repo_path} has been reverted to this commit",
         "",
         "If you have no idea what I am on about, see here: https://github.com/3b1b",
-    ])
+    ]).format(**locals())
 
     print(results)
 
