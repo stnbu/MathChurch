@@ -91,7 +91,7 @@ It does this by:
 1. Checking out that commit in its own `3b1b/manim` repository.
 1. Printing instructions to you to do the rest.
 
-All of this happens under `~/tbob`. Take a look at the source.
+All of this happens under `~/tbob`. Take a look at the source at `tbob/__main__.py`.
 
 You will find there is still more work to do. For example you might need to:
 
