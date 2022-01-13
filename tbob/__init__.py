@@ -93,14 +93,11 @@ if __name__ == "__main__":
 
     init()
 
-    videos_repo_path = os.path.join(TBOB_DIR, "3b1b_videos")
-    manim_repo_path = os.path.join(TBOB_DIR, "3b1b_manim")
-    manim_venv_path = os.path.join(TBOB_DIR, "3b1b_venv")
+    videos_repo_path = os.path.join(TBOB_DIR, "videos")
+    manim_repo_path = os.path.join(TBOB_DIR, "manim")
+    venv_path = os.path.join(TBOB_DIR, "venv")
 
-    create_venv(manim_venv_path)
-
-    # pip_install_editable(manim_repo_path, manim_venv_path)
-    #
+    create_venv(venv_path)
 
     videos_repo = get_repo(videos_repo_path, "https://github.com/3b1b/videos.git")
     manim_repo = get_repo(manim_repo_path, "https://github.com/3b1b/manim.git")
