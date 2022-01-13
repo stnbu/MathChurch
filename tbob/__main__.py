@@ -100,43 +100,35 @@ def main():
 
     this_script = os.path.basename(__file__)
 
-    help = '\n'.join([
-        "",
-        "USAGE: {this_script} repo-relative/path/to/manim/script.py",
-        "",
-        "Please note: We are using Grant Sanderson's 3blue1brown version of mainm.",
-        "If you are experimenting with manim or using it in a project. Please see this URL:",
-        "",
-        "    https://www.manim.community/",
-        "",
-        "The purpose of `tbob` is to make it easier to 'play' the videos featured in",
-        "3b1b/videos: We need to figure out what _version_ of 3b1b/manim to use in a",
-        "particular context. That's what this tool does.",
-        "",
-        "You supply a a path of a video and this tool asks \"what is the last commit made",
-        "to this file?\"",
-        "",
-        "It then uses that timestamp to find the next commit to 3b1b/mainim that occured",
-        "_before_ that time, hopefully having the right version of mainim for the file/script",
-        "",
-        "Your 3b1b video playing environment:",
-        "    videos repo: {videos_repo_path}",
-        "    manim repo: {manim_repo_path}",
-        "    virtual env: {venv_path}",
-        "",
-        "If you have no idea what I am on about, see here: https://github.com/3b1b",
-        "",
-    ]).format(**locals())
-
-        # "",
-        # "The last commit to {script_path} was {videos_commit} at {videos_commit.authored_date}",
-        # "",
-        # "We found commit {manim_commit} in manim which has epoch {manim_commit.authored_date}",
-        # "",
-        # "The repo at {manim_repo_path} has been reverted to this commit",
-        # "",
-        # "If you have no idea what I am on about, see here: https://github.com/3b1b",
-
+    help = "\n".join(
+        [
+            "",
+            "USAGE: {this_script} repo-relative/path/to/manim/script.py",
+            "",
+            "Please note: We are using Grant Sanderson's 3blue1brown version of mainm.",
+            "If you are experimenting with manim or using it in a project. Please see this URL:",
+            "",
+            "    https://www.manim.community/",
+            "",
+            "The purpose of `tbob` is to make it easier to 'play' the videos featured in",
+            "3b1b/videos: We need to figure out what _version_ of 3b1b/manim to use in a",
+            "particular context. That's what this tool does.",
+            "",
+            'You supply a a path of a video and this tool asks "what is the last commit made',
+            'to this file?"',
+            "",
+            "It then uses that timestamp to find the next commit to 3b1b/mainim that occured",
+            "_before_ that time, hopefully having the right version of mainim for the file/script",
+            "",
+            "Your 3b1b video playing environment:",
+            "    videos repo: {videos_repo_path}",
+            "    manim repo: {manim_repo_path}",
+            "    virtual env: {venv_path}",
+            "",
+            "If you have no idea what I am on about, see here: https://github.com/3b1b",
+            "",
+        ]
+    ).format(**locals())
 
     if len(sys.argv) < 2:
         print(help)
@@ -151,15 +143,18 @@ def main():
     manim_commit = get_commit_before(manim_repo, videos_commit)
     manim_repo.head.reference = manim_commit
 
-    summary = '\n'.join([
-        "The last commit to {script_path} was {videos_commit} at {videos_commit.authored_date}",
-        "",
-        "We found commit {manim_commit} in manim which has epoch {manim_commit.authored_date}",
-        "",
-        "The repo at {manim_repo_path} has been reverted to this commit",
-        "",
-    ]).format(**locals())
+    summary = "\n".join(
+        [
+            "The last commit to {script_path} was {videos_commit} at {videos_commit.authored_date}",
+            "",
+            "We found commit {manim_commit} in manim which has epoch {manim_commit.authored_date}",
+            "",
+            "The repo at {manim_repo_path} has been reverted to this commit",
+            "",
+        ]
+    ).format(**locals())
 
     print(summary)
+
 
 main()
