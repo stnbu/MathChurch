@@ -32,7 +32,7 @@ def clean(path):
 
 def get_repo(path, origin=None):
     """Returns a `Repo` instance corresponding to `path`. If `path` does not
-    exist, clones from `origin` (URL) and then retuns the `Repo` instance of the
+    exist, clones from `origin` (URL) and then returns the `Repo` instance of the
     newly-cloned repo at `path`.
     """
     repo = None
@@ -60,7 +60,7 @@ def get_last_commit(repo, path=None):
 
 def get_commit_before(repo, commit):
     """Going backwards through time, get the first commit from `repo` that
-    occured before (in time) the supplied `commit`.
+    occurred before (in time) the supplied `commit`.
     """
     for c in repo.iter_commits():
         if c.authored_date < commit.authored_date:
