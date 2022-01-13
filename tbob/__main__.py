@@ -4,6 +4,7 @@
 
 
 import os
+import sys
 import venv
 import subprocess
 from git import Repo
@@ -89,7 +90,7 @@ def create_venv(path):
         venv.EnvBuilder(with_pip=True).create(path)
 
 
-if __name__ == "__main__":
+def main():
 
     init()
 
@@ -102,10 +103,45 @@ if __name__ == "__main__":
     videos_repo = get_repo(videos_repo_path, "https://github.com/3b1b/videos.git")
     manim_repo = get_repo(manim_repo_path, "https://github.com/3b1b/manim.git")
 
-    videos_commit = get_last_commit(videos_repo, "_2021/newton_fractal.py")
+    script_path = sys.argv[1]
+
+    videos_commit = get_last_commit(videos_repo, script_path)
     manim_commit = get_commit_before(manim_repo, videos_commit)
 
     manim_repo.head.reference = manim_commit
 
-    print("videos_commit: %s" % videos_commit)
-    print("manim_commit: %s" % manim_commit)
+    results = '\n'.join([
+        "[It's too late, we've already written to your filesystrem.]",
+        "",
+        "Please note: We are using Grant Sanderson's 3blue1brown version of mainm.",
+        "If you are experimenting with manim or using it in a project. Please see this URL:",
+        "",
+        "    https://www.manim.community/",
+        "",
+        "It's not recommended to use https://github.com/3b1b/manim for new projects.",
+        "",
+        "The purpose of `tbob` is to make it easier to 'play' the videos featured in",
+        "3b1b/videos: We need to figure out what _version_ of 3b1b/manim to use in a",
+        "particular context. That's what this tool does.",
+        ""
+        "You supply a a path of a video and this tool asks \"what is the last commit made",
+        "to this file?\"",
+        "",
+        "It then uses that timestamp to find the next commit to 3b1b/mainim that occured",
+        "_before_ that time, hopefully having the right version of mainim for the file/script",
+        "",
+        "Your 3b1b video playing environment:",
+        "    videos repo: %s",
+        "    manim repo: %s",
+        "    virtual env: %s",
+        "",
+        "The last commit to %s was %s at %s",
+        "",
+        "We found commit %s in manim which has epoch %s and manim has been reverted to commit",
+        "",
+        "If you have no idea what I am on about, see here: https://github.com/3b1b",
+    ])
+
+    print(results)
+
+main()

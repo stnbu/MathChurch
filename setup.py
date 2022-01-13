@@ -4,10 +4,11 @@ from distutils.core import setup
 
 setup(
     name="MathChurch",
-    version="0.0.4",
+    version="0.0.5",
     description="Subs-driven presentation, with TTS audio (and more)",
     author="Mike Burr",
     author_email="mb+church@unintuitive.org",
     url="https://github.com/stnbu/MathChurch",
     packages=["pulpit"],
+    entry_points={"console_scripts": ["tbob = tbob.__main__:main"]},
 )
