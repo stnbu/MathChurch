@@ -81,6 +81,34 @@ your credentials JSON file
  scene.render()
 ```
 
+### Try running `tbob`?!
+
+`tbob` (`t`hree`b`lue`o`ne`b`rown) tries to make it possible to run [the scripts](https://github.com/3b1b/videos) used to create [3b1b](https://www.3blue1brown.com/) [content](https://www.youtube.com/c/3blue1brown) content.
+
+It does this by:
+
+1. Finding the commit in [3b1b/manim](https://github.com/3b1b/manim) that came just before the last commit of the video file you're trying to run (path is relative to [3b1b/videos](https://github.com/3b1b/videos) root.)
+1. Checking out that commit in its own `3b1b/manim` repository.
+1. Printing instructions to you to do the rest.
+
+All of this happens under `~/tbob`. Take a look at the source.
+
+You will find there is still more work to do. For example you might need to:
+
+* `export PYTHONPATH=~/tbob/videos` Because there may be a module used in there!
+* Find resources, like images (`pi_creature.svg`) and possibly `sed` the code to match.
+
+Note that `tbob` thoroughly cleans its own repos under `~/tbob`, so don't put anything
+valuable in there. You might consider having your own copy of [3b1b/videos](https://github.com/3b1b/videos) elsewhere to experiment
+with.
+
+If you just want to try tbob, it has minimal dependencies. You can just:
+
+```
+pip install git+https://github.com/stnbu/MathChurch.git
+```
+
+And you should have `tbob`!!
 
 ## Hey, where do you think you're going with this thing?
 
