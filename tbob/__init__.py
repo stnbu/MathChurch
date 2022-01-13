@@ -4,6 +4,7 @@
 
 
 import os
+import venv
 import subprocess
 from git import Repo
 
@@ -54,6 +55,7 @@ def get_repo(path, origin=None):
     else:
         clean(path)
         repo = Repo(path)
+        repo.heads.master.checkout()  # what about (...) main?
         repo.remote().pull()
     return repo
 
@@ -82,6 +84,11 @@ def get_commit_before(repo, commit):
         )
 
 
+def create_venv(path):
+    if not os.path.exists(path):
+        venv.EnvBuilder(with_pip=True).create(path)
+
+
 if __name__ == "__main__":
 
     init()
@@ -90,13 +97,18 @@ if __name__ == "__main__":
     manim_repo_path = os.path.join(TBOB_DIR, "3b1b_manim")
     manim_venv_path = os.path.join(TBOB_DIR, "3b1b_venv")
 
-    videos_repo = get_repo(videos_repo_path,
-                           "https://github.com/3b1b/videos.git")
-    manim_repo = get_repo(manim_repo_path,
-                          "https://github.com/3b1b/manim.git")
+    create_venv(manim_venv_path)
+
+    # pip_install_editable(manim_repo_path, manim_venv_path)
+    #
+
+    videos_repo = get_repo(videos_repo_path, "https://github.com/3b1b/videos.git")
+    manim_repo = get_repo(manim_repo_path, "https://github.com/3b1b/manim.git")
 
     videos_commit = get_last_commit(videos_repo, "_2021/newton_fractal.py")
     manim_commit = get_commit_before(manim_repo, videos_commit)
+
+    manim_repo.head.reference = manim_commit
 
     print("videos_commit: %s" % videos_commit)
     print("manim_commit: %s" % manim_commit)
