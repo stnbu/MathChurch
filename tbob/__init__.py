@@ -29,6 +29,17 @@ def clean(path):
     assert len(out) == 0
     assert proc.returncode == 0
 
+    proc = subprocess.Popen(
+        "git checkout ./".split(),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        cwd=path,
+    )
+    out, err = proc.communicate()
+    assert len(out) == 0
+    assert len(out) == 0
+    assert proc.returncode == 0
+
 
 def get_repo(path, origin=None):
     """Returns a `Repo` instance corresponding to `path`. If `path` does not
@@ -79,11 +90,13 @@ if __name__ == "__main__":
     manim_repo_path = os.path.join(TBOB_DIR, "3b1b_manim")
     manim_venv_path = os.path.join(TBOB_DIR, "3b1b_venv")
 
-    videos_repo = get_repo(videos_repo_path, "https://github.com/3b1b/videos.git")
-    manim_repo = get_repo(manim_repo_path, "https://github.com/3b1b/manim.git")
+    videos_repo = get_repo(videos_repo_path,
+                           "https://github.com/3b1b/videos.git")
+    manim_repo = get_repo(manim_repo_path,
+                          "https://github.com/3b1b/manim.git")
 
     videos_commit = get_last_commit(videos_repo, "_2021/newton_fractal.py")
-    manim_commit = get_commit_before(repo, videos_commit)
+    manim_commit = get_commit_before(manim_repo, videos_commit)
 
-    print("videos_commit: %s", videos_commit)
-    print("manim_commit: %s", manim_commit)
+    print("videos_commit: %s" % videos_commit)
+    print("manim_commit: %s" % manim_commit)
