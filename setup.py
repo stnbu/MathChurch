@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name="MathChurch",
-    version="0.0.6",
+    version="0.0.7",
     description="Subs-driven presentation, with TTS audio (and more)",
     author="Mike Burr",
     author_email="mb+church@unintuitive.org",
