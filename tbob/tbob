@@ -27,4 +27,4 @@ cd ~/tbob/manim
 pip install -e .
 
 cd ~/tbob/videos
-PYTHONPATH=. manim-render -l --config_file="$CONFIG_FILE" "$@"
+PYTHONPATH=. manim-render --low_quality --write_file --config_file="$CONFIG_FILE" "$@"
