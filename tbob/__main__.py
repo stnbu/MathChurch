@@ -9,6 +9,9 @@ from glob import glob
 import venv
 import subprocess
 from git import Repo
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 TBOB_DIR = None
 
@@ -16,32 +19,23 @@ TBOB_DIR = None
 def init():
     global TBOB_DIR
     TBOB_DIR = os.path.expanduser("~/tbob")
+    logging.debug("Creating root of tbob experience at %s" % TBOB_DIR)
     os.makedirs(TBOB_DIR, exist_ok=True)
-
 
 def clean(path):
     """The missing `repo.clean`"""
-    proc = subprocess.Popen(
-        "git clean -qfdx".split(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        cwd=path,
-    )
-    out, err = proc.communicate()
-    assert len(out) == 0
-    assert len(out) == 0
-    assert proc.returncode == 0
-
-    proc = subprocess.Popen(
-        "git checkout ./".split(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        cwd=path,
-    )
-    out, err = proc.communicate()
-    assert len(out) == 0
-    assert len(out) == 0
-    assert proc.returncode == 0
+    for command in ["git clean -qfdx", "git checkout ./"]:
+        logging.debug("cd %s && %s" % (path, command))
+        proc = subprocess.Popen(
+            command.split(),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            cwd=path,
+        )
+        out, err = proc.communicate()
+        assert len(out) == 0
+        assert len(out) == 0
+        assert proc.returncode == 0
 
 
 def get_repo(path, origin=None):
@@ -53,6 +47,7 @@ def get_repo(path, origin=None):
     if not os.path.exists(path):
         if origin is None:
             raise Exception("%s does not exist and no remote URL was supplied" % path)
+        logging.debug("cloning %s to %s" % (origin, path))
         repo = Repo.clone_from(url=origin, to_path=path)
     else:
         clean(path)
@@ -88,6 +83,7 @@ def get_commit_before(repo, commit):
 
 def create_venv(path):
     if not os.path.exists(path):
+        logging.debug("No venv found. Creating one at %s" % path)
         venv.EnvBuilder(with_pip=True).create(path)
 
 
@@ -99,40 +95,6 @@ def main():
     manim_repo_path = os.path.join(TBOB_DIR, "manim")
     venv_path = os.path.join(TBOB_DIR, "venv")
 
-    help = "\n".join(
-        [
-            "",
-            "USAGE: tbob repo-relative/path/to/manim/script.py",
-            "",
-            "Please note: We are using Grant Sanderson's 3blue1brown version of mainm.",
-            "If you are experimenting with manim or using it in a project. Please see this URL:",
-            "",
-            "    https://www.manim.community/",
-            "",
-            "The purpose of `tbob` is to make it easier to 'play' the videos featured in",
-            "3b1b/videos: We need to figure out what _version_ of 3b1b/manim to use in a",
-            "particular context. That's what this tool does.",
-            "",
-            'You supply a a path of a video and this tool asks "what is the last commit made',
-            'to this file?"',
-            "",
-            "It then uses that timestamp to find the next commit to 3b1b/mainim that occured",
-            "_before_ that time, hopefully having the right version of mainim for the file/script",
-            "",
-            "Your 3b1b video playing environment:",
-            "    videos repo: {videos_repo_path}",
-            "    manim repo: {manim_repo_path}",
-            "    virtual env: {venv_path}",
-            "",
-            "If you have no idea what I am on about, see here: https://github.com/3b1b",
-            "",
-        ]
-    ).format(**locals())
-
-    if len(sys.argv) < 2:
-        print(help)
-        sys.exit(0)
-
     create_venv(venv_path)
 
     script_path = sys.argv[1]
@@ -141,38 +103,3 @@ def main():
     videos_commit = get_last_commit(videos_repo, script_path)
     manim_commit = get_commit_before(manim_repo, videos_commit)
     manim_repo.head.reference = manim_commit
-
-    summary = "\n".join(
-        [
-            "The last commit to {script_path} was {videos_commit} at {videos_commit.authored_date}",
-            "",
-            "We found commit {manim_commit} in manim which has epoch {manim_commit.authored_date}",
-            "",
-            "The repo at {manim_repo_path} has been reverted to this commit",
-            "",
-        ]
-    ).format(**locals())
-
-    print(summary)
-
-    links = glob(os.path.join(venv_path, 'lib', 'python*', 'site-packages', 'manim*.egg-link'))
-    if len(links) == 0:
-        message = "\n".join([
-            "You still must manually do the following but only once:",
-            "",
-            "    ~$ source {venv_path}/bin/activate",
-            "    ~$ cd {manim_repo_path}",
-            "    ~$ pip install -e .",
-            "",
-        ]).format(**locals())
-        print(message)
-
-    message = "\n".join([
-        "Having done the above, you should be able to:",
-        "",
-        "    ~$ cd {videos_repo_path}",
-        "    ~$ source {venv_path}/bin/activate",
-        "    ~$ manim-render <options> {script_path} [ClassName]",
-        "",
-    ]).format(**locals())
-    print(message)

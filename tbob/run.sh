@@ -18,6 +18,8 @@ directories:
   temporary_storage: "${TEMP}/manim_cache"
 EOF
 
+_tbob_helper "$1"
+
 . ~/tbob/venv/bin/activate
 
 # The manim repo likely changed its state. So we do this every time:
