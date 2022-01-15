@@ -49,7 +49,11 @@ class Player:
 
                 if self.ripped:
                     self.subrip_file.add(
-                        SubRipChunk(appear=self.offset, disappear=self.offset+length, text=item)
+                        SubRipChunk(
+                            appear=self.offset,
+                            disappear=self.offset + length,
+                            text=item,
+                        )
                     )
 
                 self.offset = self.offset + length

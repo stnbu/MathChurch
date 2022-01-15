@@ -22,6 +22,7 @@ def init():
     logging.debug("Creating root of tbob experience at %s" % TBOB_DIR)
     os.makedirs(TBOB_DIR, exist_ok=True)
 
+
 def clean(path):
     """The missing `repo.clean`"""
     for command in ["git clean -qfdx", "git checkout ./"]:
