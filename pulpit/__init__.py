@@ -14,6 +14,7 @@ from .tts import *
 from .subrip import *
 from manim import *
 
+
 class Player:
     def __init__(self, scene, lecture, tts_engine):
         self.scene = scene
