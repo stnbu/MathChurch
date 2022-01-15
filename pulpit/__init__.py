@@ -38,10 +38,20 @@ class Player:
                 )
                 self.scene.add_sound(path)
 
+                wait = length + 0.2
+                subtitle = Text(item)
+                subtitle.scale(0.5)
+                subtitle.to_edge(DOWN)
+                self.scene.add(subtitle)
+                logger.info(
+                    "We will be adding a pause to the video of %s seconds" % wait)
+
                 disappear = self.offset + length
                 self.subrip_file.add(
                     SubRipChunk(appear=self.offset, disappear=disappear, text=item)
                 )
+                self.scene.wait(wait)
+                self.scene.remove(subtitle)
                 self.offset = disappear
 
                 self.scene.wait(length)
