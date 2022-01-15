@@ -37,15 +37,14 @@ class Player:
                     "text of length %s characters." % (path, length, len(item))
                 )
                 self.scene.add_sound(path)
-
                 wait = length + 0.2
                 subtitle = Text(item)
                 subtitle.scale(0.5)
                 subtitle.to_edge(DOWN)
                 self.scene.add(subtitle)
                 logger.info(
-                    "We will be adding a pause to the video of %s seconds" % wait)
-
+                    "We will be adding a pause to the video of %s seconds" % wait
+                )
                 disappear = self.offset + length
                 self.subrip_file.add(
                     SubRipChunk(appear=self.offset, disappear=disappear, text=item)
@@ -53,14 +52,11 @@ class Player:
                 self.scene.wait(wait)
                 self.scene.remove(subtitle)
                 self.offset = disappear
-
                 self.scene.wait(length)
-
             elif isinstance(item, FunctionType):
                 item(self.scene)
             else:
                 raise ValueError
-
         subrip_file_path = (
             os.path.splitext(self.scene.renderer.file_writer.movie_file_path)[0]
             + ".srt"
