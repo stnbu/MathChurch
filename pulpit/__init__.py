@@ -55,6 +55,9 @@ class Player:
                 subtitle.to_edge(DOWN)
                 self.scene.add(subtitle)
 
+            if actions_wait < length:
+                self.scene.wait(length - actions_wait)
+
             if self.baked:
                 self.scene.remove(subtitle)
             if self.ripped:
@@ -70,8 +73,6 @@ class Player:
             for action in chunk.actions:
                 action(self.scene)
 
-            if actions_wait < length:
-                self.scene.wait(length - actions_wait)
 
 
         subrip_file_path = (
