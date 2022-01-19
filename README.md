@@ -38,9 +38,11 @@ Known to work is: [MacTex](https://www.tug.org/mactex/mactex-download.html)
 
 [Manim](https://github.com/ManimCommunity/manim) is really the only dependency. If you can run Manim, you can run this stuff (minus maybe Google Cloud TTS).
 
-The main attraction is `demo.py`. You can run `demo.py` by following these instructions.
+I had problems trying to install Manim with the latest Big Sur-distributed `/usr/bin/python3`.
 
-### Manim
+I instead have used the brew-distributed `python@3.9` and `python@3.10` packages, both with success.
+
+Y.M.M.V.
 
 As per [the manim installation instructions](https://docs.manim.community/en/stable/installation/macos.html#macos), you need to install the command line tools `py3cairo` and `ffmpeg` via brew.
 
@@ -75,7 +77,7 @@ If you're feeling lucky and just want to install everything you might possibly n
 time pip install manim google-cloud-texttospeech mutagen GitPython
 ```
 
-## Install
+## If you want a script...
 
 These commands should work. Reflect and refine to taste.
 
@@ -93,7 +95,7 @@ pip install git+https://github.com/stnbu/MathChurch.git # or "editable mode" if 
 > ⚠ Note that caching has implications not yet understood [#3]
 > Play it safe and `rm -rf ./media` between runs.
 
-Once your laptop cools down, you should be able to run `./demo.py` which will print the path to its output file: an MPEG-4 video file hopefully with both subtitles and audio.
+Having installed LaTeX, Manim, and this repo, you should be able to run `./demo.py` which will print the path to its output file: an MPEG-4 video file hopefully with both subtitles and audio.
 
 The output will look something like this:
 
@@ -130,7 +132,7 @@ your credentials JSON file
  scene.render()
 ```
 
-### Try running `tbob`?!
+## `tbob`
 
 > ⚠ Note that (currently) you must manually `pip install GitPython` in order to run `tbob`.
 
