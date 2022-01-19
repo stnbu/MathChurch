@@ -16,7 +16,7 @@ Join [the discord server](https://discord.gg/XTHcHc7N) and ask the friendly folk
 
 ## tl;dr
 
-* Have an Intel based Mac, [Big Sur or earlier](../../issues/3).
+* Have an Intel based Mac, [Big Sur or earlier](../../issues/8).
 * Have a `latex` in your path
 * Use Python v3.9.9 (or close)
 * `pip install manim git+https://github.com/stnbu/MathChurch.git`
@@ -26,7 +26,7 @@ Join [the discord server](https://discord.gg/XTHcHc7N) and ask the friendly folk
 
 ### Mac (Intel? Pre-Monterey?)
 
-So far I've only run this on Intel-based Big Sur machines. [Monterey in particular](../../issues/3) seems to maybe be problematic.
+So far I've only run this on Intel-based Big Sur machines. [Monterey in particular](../../issues/8) seems to maybe be problematic.
 
 If you run/install on something else, please consider [sharing your experience](https://github.com/stnbu/MathChurch/issues/new) (good or bad).
 
@@ -94,7 +94,7 @@ pip install git+https://github.com/stnbu/MathChurch.git # or "editable mode" if 
 
 ## Run
 
-> ⚠ Note that caching has implications not yet understood [#3]
+> ⚠ Note that caching has implications [not yet understood](../../issues/3).
 > Play it safe and `rm -rf ./media` between runs.
 
 Having installed LaTeX, Manim, and this repo, you should be able to run `./demo.py` which will print the path to its output file: an MPEG-4 video file hopefully with both subtitles and audio.
