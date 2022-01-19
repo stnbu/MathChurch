@@ -8,7 +8,6 @@ def asset(filename):
 
 pills = ImageMobject(asset("pills.jpg"))
 pills.scale(0.5)
-negative_three = MathTex(r"-3")
 animated_numbers = MathTex(r"flashing(1...2...3...)")
 flashing_plus = MathTex(r"5 flash(+) 2")
 flashing_minus = MathTex(r"8 flash(-) 7")
@@ -16,6 +15,21 @@ bare_integral = MathTex(r"\int")
 
 add_apples = MathTex(r"apple + apple")
 subtract_apples = MathTex(r"apple - apple")
+
+
+def negative_three_animation(scene):
+    neg3 = MathTex(r"-", r"3")
+    scene.add(neg3)
+    neg3[0].set_color(RED)
+    scene.play(Flash(neg3[0]))
+    scene.wait()
+
+def negative_three_animation_x(scene):
+    neg3 = MathTex(r"-", r"3")
+    scene.add(neg3)
+    neg3[1].set_color(RED)
+    scene.play(Flash(neg3[1]))
+    scene.wait()
 
 lecture = [
     SubChunk("""What are negative numbers?"""),
@@ -32,17 +46,20 @@ lecture = [
              ]),
 
     SubChunk("""That hoizontal stroke you see to the left of a number is a symbol. It has
-       meaning. Just as the symbol you see on the right has meaning: it's a
-       number.""",
-             actions=[lambda scene: scene.add(negative_three)]),
+       meaning.""",
+             actions=[negative_three_animation]),
 
-    SubChunk("""But maybe you got so used to seeing these symobols that you lost
-       your appriciation for their real meaning. What is three? Give it a
-       long think sometime. You might find it to be more profound than you gave
-       credit in the past.""",
-             actions=[lambda scene: scene.remove(negative_three),
-                      lambda scene: scene.add(animated_numbers)
-                      ]),
+    SubChunk("""Just as the symbol you see on the right has meaning: it's a
+       number.""",
+             actions=[negative_three_animation_x]),
+
+    # SubChunk("""But maybe you got so used to seeing these symobols that you lost
+    #    your appriciation for their real meaning. What is three? Give it a
+    #    long think sometime. You might find it to be more profound than you gave
+    #    credit in the past.""",
+    #          actions=[lambda scene: scene.remove(negative_three),
+    #                   lambda scene: scene.add(animated_numbers)
+    #                   ]),
 
     # lambda scene: scene.remove(animated_numbers),
     # SubChunk("""Likewise, that "dash" that you see to the left of a "negative number" is
