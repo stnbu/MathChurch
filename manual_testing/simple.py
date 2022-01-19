@@ -1,7 +1,7 @@
-
+import os
 from pulpit import *
 
-pills = ImageMobject("pills.jpg")
+pills = ImageMobject(os.path.join(os.path.dirname(__file__), "pills.jpg"))
 
 lecture = [
     SubChunk(
@@ -9,7 +9,8 @@ lecture = [
         This text appears inside of a Python list. Don't worry, it's just a proof
         of concept!
         """,
-        [lambda scene: scene.play(FadeIn(pills), run_time=9)])
+        [lambda scene: scene.play(FadeIn(pills), run_time=9)],
+    )
 ]
 
 config.quality = "low_quality"
@@ -17,6 +18,3 @@ scene = Scene()
 player = Player(scene, lecture, local_tts)
 player.play()
 scene.render()
-
-# ~/git/MathChurch/media/videos/480p15/Scene.mp4
-# ~/git/MathChurch/media/videos/480p15/Scene.srt

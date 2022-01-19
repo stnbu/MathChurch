@@ -16,6 +16,7 @@ from manim import *
 
 SubChunk = namedtuple("SubChunk", ["text", "actions"], defaults=[[]])
 
+
 class Player:
     def __init__(self, scene, lecture, tts_engine, baked=False, ripped=True):
         self.scene = scene
