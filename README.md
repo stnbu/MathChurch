@@ -34,7 +34,7 @@ If you run/install on something else, please consider [sharing your experience](
 
 You need to have the command `latex` in your shell's path. If you installed a latex package and `where latex` has no output, try closing and re-opening your terminal app (e.g. "Terminal").
 
-Known to work is: [MacTex](https://www.tug.org/mactex/mactex-download.html), which has its latex binary at `/Library/TeX/texbin/latex` (`$PATH` is automatically updated by the installer).
+[MacTex](https://www.tug.org/mactex/mactex-download.html) is known to work. Its binary is installed at `/Library/TeX/texbin/latex` (`$PATH` is automatically updated by the installer.)
 
 ### Python
 
