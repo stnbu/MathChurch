@@ -14,17 +14,66 @@ Join [the discord server](https://discord.gg/XTHcHc7N) and ask the friendly folk
 
 # Install and run the demo
 
+## tl;dr
+
+* Have an Intel based Mac, [Big Sur or earlier](#3).
+* Have a `latex` in your path
+* Use Python v3.9.9 (or close)
+* `pip install manim git+https://github.com/stnbu/MathChurch.git`
+* `python3 /path/to/demo.py`
+
+## Prereqs
+
+### Mac (Intel? Pre-Monterey?)
+
+So far I've only run this on Intel-based Big Sur machines. [Monterey in particular](#3) seems to maybe be problematic.
+
+If you run/install on something else, please consider [sharing your experience](https://github.com/stnbu/MathChurch/issues/new) (good or bad).
+
+You need to have the command `latex` in your shell's path. If you installed a latex package and `where latex` has no output, try closing and re-opening your terminal app (e.g. "Terminal").
+
+Known to work is: [MacTex](https://www.tug.org/mactex/mactex-download.html)
+
+### Python
+
+[Manim](https://github.com/ManimCommunity/manim) is really the only dependency. If you can run Manim, you can run this stuff (minus maybe Google Cloud TTS).
+
 The main attraction is `demo.py`. You can run `demo.py` by following these instructions.
 
-> ⚠ Assumptions:
->   1. You are running a recent OSX on Intel Mac hardware (M1: keep reading)
->   2. The "python3" on your system is Python 3.9.9 (or close)
-
-Note that the `/usr/bin/python3` (3.8.2) bundled with Big Sur `11.6.1 20G224` gave me lots of trouble. YMMV. I've been using the `python@3.9` distributed by brew.
+### Manim
 
 As per [the manim installation instructions](https://docs.manim.community/en/stable/installation/macos.html#macos), you need to install the command line tools `py3cairo` and `ffmpeg` via brew.
 
 > M1 processors will also need to have `cmake`, `pango`, and `scipy`.
+
+### Software from this repo
+
+This one is easy: `pip install manim git+https://github.com/stnbu/MathChurch.git`. The pip dependency system is bypassed for the moment so if you see `ImportError` messages, you probably need to install something. Manim is covered above. [Mutagen] and [GGG] together are needed to use _Google's_ text to speech.
+
+`demo.py` simply uses the Mac's `say` command to write out TTS in the form of WAVE files. In other words: there are no dependencies for doing text-to-speech on a Mac. If you're a real minimalist, you can even just have use the "silence" TTS engine, which produces _roughly_ the right pauses for humans to read subtitles.
+
+In addition to pip-installing this git repo, you might want a separate copy of the same repo, so you have a copy of `demo.py` (and others under `manual_testing`) that you can experiment with. To get a copy of this repo, just use git!
+
+```
+git clone https://github.com/stnbu/MathChurch.git
+```
+
+If your environment is working, you should be able to run _most_ of these:
+
+```
+ls -1 demo.py manual_testing/*.py
+demo.py
+manual_testing/baked_and_ripped.py
+manual_testing/demo.py
+manual_testing/run.py
+manual_testing/simple.py
+```
+
+If you're feeling lucky and just want to install everything you might possibly need, you can just run
+
+```
+time pip install manim google-cloud-texttospeech mutagen GitPython
+```
 
 ## Install
 
@@ -82,6 +131,8 @@ your credentials JSON file
 ```
 
 ### Try running `tbob`?!
+
+> ⚠ Note that (currently) you must manually `pip install GitPython` in order to run `tbob`.
 
 `tbob` (`t`hree`b`lue`o`ne`b`rown) tries to make it possible to run [the scripts](https://github.com/3b1b/videos) used to create [3b1b](https://www.3blue1brown.com/) [content](https://www.youtube.com/c/3blue1brown).
 
