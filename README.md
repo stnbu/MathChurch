@@ -16,7 +16,7 @@ Join [the discord server](https://discord.gg/XTHcHc7N) and ask the friendly folk
 
 ## tl;dr
 
-* Have an Intel based Mac, [Big Sur or earlier](#3).
+* Have an Intel based Mac, [Big Sur or earlier](issues/3).
 * Have a `latex` in your path
 * Use Python v3.9.9 (or close)
 * `pip install manim git+https://github.com/stnbu/MathChurch.git`
@@ -26,7 +26,7 @@ Join [the discord server](https://discord.gg/XTHcHc7N) and ask the friendly folk
 
 ### Mac (Intel? Pre-Monterey?)
 
-So far I've only run this on Intel-based Big Sur machines. [Monterey in particular](#3) seems to maybe be problematic.
+So far I've only run this on Intel-based Big Sur machines. [Monterey in particular](issues/3) seems to maybe be problematic.
 
 If you run/install on something else, please consider [sharing your experience](https://github.com/stnbu/MathChurch/issues/new) (good or bad).
 
