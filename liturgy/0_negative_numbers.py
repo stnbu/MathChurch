@@ -24,6 +24,7 @@ def negative_three_animation(scene):
     scene.play(Flash(neg3[0]))
     scene.wait()
 
+
 def negative_three_animation_x(scene):
     neg3 = MathTex(r"-", r"3")
     scene.add(neg3)
@@ -31,28 +32,32 @@ def negative_three_animation_x(scene):
     scene.play(Flash(neg3[1]))
     scene.wait()
 
+
 lecture = [
     SubChunk("""What are negative numbers?"""),
-
-    SubChunk("""You likely learned about negative numbers long ago. Maybe they have lost
-       their mystery for you."""),
-
-    SubChunk("""But what if I told you there's more here than you think. There are even
+    SubChunk(
+        """You likely learned about negative numbers long ago. Maybe they have lost
+       their mystery for you."""
+    ),
+    SubChunk(
+        """But what if I told you there's more here than you think. There are even
        some hints about what professional mathematitions actually do in something
        as mundane as negative numbers.""",
-             actions=[
-                 lambda scene: scene.play(FadeIn(pills), run_time=3),
-                 lambda scene: scene.play(FadeOut(pills), run_time=3)
-             ]),
-
-    SubChunk("""That hoizontal stroke you see to the left of a number is a symbol. It has
+        actions=[
+            lambda scene: scene.play(FadeIn(pills), run_time=3),
+            lambda scene: scene.play(FadeOut(pills), run_time=3),
+        ],
+    ),
+    SubChunk(
+        """That hoizontal stroke you see to the left of a number is a symbol. It has
        meaning.""",
-             actions=[negative_three_animation]),
-
-    SubChunk("""Just as the symbol you see on the right has meaning: it's a
+        actions=[negative_three_animation],
+    ),
+    SubChunk(
+        """Just as the symbol you see on the right has meaning: it's a
        number.""",
-             actions=[negative_three_animation_x]),
-
+        actions=[negative_three_animation_x],
+    ),
     # SubChunk("""But maybe you got so used to seeing these symobols that you lost
     #    your appriciation for their real meaning. What is three? Give it a
     #    long think sometime. You might find it to be more profound than you gave
@@ -60,7 +65,6 @@ lecture = [
     #          actions=[lambda scene: scene.remove(negative_three),
     #                   lambda scene: scene.add(animated_numbers)
     #                   ]),
-
     # lambda scene: scene.remove(animated_numbers),
     # SubChunk("""Likewise, that "dash" that you see to the left of a "negative number" is
     #    also just a symbol. Why is it a dash? Why not three dots? Why not a
