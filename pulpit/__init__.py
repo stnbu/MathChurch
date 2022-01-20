@@ -22,9 +22,9 @@ class SubChunk:
         if len(lines) == 1:
             (self.text,) = lines
         else:
-            stripped_lines = [l.strip(' ') for l in lines[1:-1]]
-            stripped_lines.insert(0, lines[0].rstrip(' '))
-            stripped_lines.append(lines[-1].lstrip(' '))
+            stripped_lines = [l.strip(" ") for l in lines[1:-1]]
+            stripped_lines.insert(0, lines[0].rstrip(" "))
+            stripped_lines.append(lines[-1].lstrip(" "))
             self.text = " ".join(stripped_lines)
         if actions is None:
             self.actions = []

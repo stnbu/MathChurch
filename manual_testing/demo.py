@@ -8,15 +8,15 @@ lecture = [
     SubChunk(
         "This is the first chunk of text. Let me try to explain the idea here.\n",
         "This text appears inside of a Python list. Don't worry, it's just a proof\n",
-        "of concept!"
+        "of concept!",
     ),
     SubChunk(
         "The words that you are seeing now are the next chunk of subtitles\n",
-        "in the demo. No biggie. Just showing you how to chunk your subs."
+        "in the demo. No biggie. Just showing you how to chunk your subs.",
     ),
     SubChunk(
         "Now, the next exciting thing is that these subtitles are interleaved\n",
-        "with \"commands\". I can tell Manim to display some impressive math equation."
+        'with "commands". I can tell Manim to display some impressive math equation.',
     ),
     SubChunk("Ready?"),
     SubChunk("Here goes..."),
@@ -29,7 +29,7 @@ lecture = [
         "All gone? Good. It should be!",
         actions=[lambda scene: scene.remove(impressive_equation)],
     ),
-    SubChunk("Amen!")
+    SubChunk("Amen!"),
 ]
 
 config.quality = "low_quality"
