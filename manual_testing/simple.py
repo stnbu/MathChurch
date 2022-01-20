@@ -8,8 +8,8 @@ lecture = [
         """This is the first chunk of text. Let me try to explain the idea here.
         This text appears inside of a Python list. Don't worry, it's just a proof
         of concept!
-        """, actions=[
-            lambda scene: scene.play(FadeIn(pills), run_time=9)],
+        """,
+        actions=[lambda scene: scene.play(FadeIn(pills), run_time=9)],
     )
 ]
 

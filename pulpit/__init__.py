@@ -14,25 +14,23 @@ from .tts import *
 from .subrip import *
 from manim import *
 
-class SubChunk:
 
+class SubChunk:
     def __init__(self, *lines, actions=None):
         if len(lines) == 0:
             raise ValueError
         if len(lines) == 1:
-            self.text, = lines
+            (self.text,) = lines
         else:
             stripped_lines = [l.strip() for l in lines[1:-1]]
             stripped_lines.insert(0, lines[0].rstrip())
-            try:
-                stripped_lines.append(lines[-1].lstrip())
-            except:
-                import ipdb; ipdb.set_trace()
-            self.text = ' '.join(stripped_lines)
+            stripped_lines.append(lines[-1].lstrip())
+            self.text = " ".join(stripped_lines)
         if actions is None:
             self.actions = []
         else:
             self.actions = actions
+
 
 class Player:
     def __init__(self, scene, lecture, tts_engine, baked=False, ripped=True):
