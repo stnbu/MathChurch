@@ -5,10 +5,9 @@ pills = ImageMobject(os.path.join(os.path.dirname(__file__), "pills.jpg"))
 
 lecture = [
     SubChunk(
-        """This is the first chunk of text. Let me try to explain the idea here.
-        This text appears inside of a Python list. Don't worry, it's just a proof
-        of concept!
-        """,
+        "This is the first chunk of text. Let me try to explain the idea here.\n",
+        "This text appears inside of a Python list. Don't worry, it's just a proof\n",
+        "of concept!",
         actions=[lambda scene: scene.play(FadeIn(pills), run_time=9)],
     )
 ]
